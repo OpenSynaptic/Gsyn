@@ -25,7 +25,8 @@ class BarChartWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+            Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface)),
             const SizedBox(height: 12),
             Expanded(
               child: values.isEmpty

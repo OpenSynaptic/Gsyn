@@ -445,7 +445,8 @@ class _ThemeTab extends ConsumerWidget {
       _SectionHeader(icon: Icons.palette, title: l.secAccent),
       const SizedBox(height: 4),
       Text(l.accentHint,
-          style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          style: TextStyle(fontSize: 12,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
       const SizedBox(height: 12),
       GridView.builder(
         shrinkWrap: true,
@@ -455,7 +456,7 @@ class _ThemeTab extends ConsumerWidget {
           crossAxisCount: 4, mainAxisSpacing: 10, crossAxisSpacing: 10,
           childAspectRatio: 0.85,
         ),
-        itemBuilder: (_, i) {
+        itemBuilder: (ctx, i) {
           final p = AppThemePreset.values[i];
           final sel = p == currentAccent;
           return GestureDetector(
@@ -463,7 +464,7 @@ class _ThemeTab extends ConsumerWidget {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: Theme.of(ctx).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                     color: sel ? p.seedColor : Colors.transparent, width: 2.5),
@@ -485,7 +486,9 @@ class _ThemeTab extends ConsumerWidget {
                     style: TextStyle(
                         fontSize: 11,
                         fontWeight: sel ? FontWeight.bold : FontWeight.normal,
-                        color: sel ? p.seedColor : AppColors.textSecondary)),
+                        color: sel
+                            ? p.seedColor
+                            : Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.6))),
               ]),
             ),
           );
@@ -498,14 +501,17 @@ class _ThemeTab extends ConsumerWidget {
       _SectionHeader(icon: Icons.contrast, title: l.secBg),
       const SizedBox(height: 4),
       Text(l.bgHint,
-          style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          style: TextStyle(fontSize: 12,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
       const SizedBox(height: 12),
 
       // ─ Dark group ─
       Row(children: [
-        const Icon(Icons.dark_mode, size: 14, color: AppColors.textSecondary),
+        Icon(Icons.dark_mode, size: 14,
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
         const SizedBox(width: 4),
-        Text(l.bgGroupDark, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+        Text(l.bgGroupDark, style: TextStyle(fontSize: 12,
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
       ]),
       const SizedBox(height: 8),
       _BgPresetGrid(
@@ -519,9 +525,11 @@ class _ThemeTab extends ConsumerWidget {
 
       // ─ Light group ─
       Row(children: [
-        const Icon(Icons.light_mode, size: 14, color: AppColors.textSecondary),
+        Icon(Icons.light_mode, size: 14,
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
         const SizedBox(width: 4),
-        Text(l.bgGroupLight, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+        Text(l.bgGroupLight, style: TextStyle(fontSize: 12,
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
       ]),
       const SizedBox(height: 8),
       _BgPresetGrid(
@@ -537,7 +545,8 @@ class _ThemeTab extends ConsumerWidget {
       _SectionHeader(icon: Icons.language, title: l.secLanguage),
       const SizedBox(height: 4),
       Text(l.langHint,
-          style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          style: TextStyle(fontSize: 12,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
       const SizedBox(height: 12),
       Row(children: [
         // Follow system
@@ -789,19 +798,22 @@ class _SectionHeader extends StatelessWidget {
   final String title;
   const _SectionHeader({required this.icon, required this.title});
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Row(children: [
-          Icon(icon, size: 16, color: AppColors.textSecondary),
-          const SizedBox(width: 6),
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textSecondary,
-                  letterSpacing: 0.5)),
-        ]),
-      );
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(children: [
+        Icon(icon, size: 16, color: color),
+        const SizedBox(width: 6),
+        Text(title,
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: color,
+                letterSpacing: 0.5)),
+      ]),
+    );
+  }
 }
 
 class _InfoRow extends StatelessWidget {
@@ -809,16 +821,20 @@ class _InfoRow extends StatelessWidget {
   final String value;
   const _InfoRow(this.label, this.value);
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Row(children: [
-          SizedBox(width: 110, child: Text(label,
-              style: const TextStyle(fontSize: 13, color: AppColors.textSecondary))),
-          Expanded(child: Text(value,
-              style: const TextStyle(fontSize: 13, color: AppColors.textPrimary),
-              overflow: TextOverflow.ellipsis)),
-        ]),
-      );
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(children: [
+        SizedBox(width: 110, child: Text(label,
+            style: TextStyle(fontSize: 13,
+                color: cs.onSurface.withValues(alpha: 0.6)))),
+        Expanded(child: Text(value,
+            style: TextStyle(fontSize: 13, color: cs.onSurface),
+            overflow: TextOverflow.ellipsis)),
+      ]),
+    );
+  }
 }
 
 /// Language selection button.
@@ -831,7 +847,8 @@ class _LangButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? Theme.of(context).colorScheme.primary : AppColors.textSecondary;
+    final cs = Theme.of(context).colorScheme;
+    final color = selected ? cs.primary : cs.onSurface.withValues(alpha: 0.6);
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -841,8 +858,8 @@ class _LangButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: selected ? color : Colors.transparent, width: 2),
           color: selected
-              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.12)
-              : AppColors.surface,
+              ? cs.primary.withValues(alpha: 0.12)
+              : cs.surfaceContainerHighest,
         ),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(icon, style: const TextStyle(fontSize: 24)),

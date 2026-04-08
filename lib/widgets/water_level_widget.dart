@@ -46,7 +46,8 @@ class _WaterLevelWidgetState extends State<WaterLevelWidget>
         child: Column(
           children: [
             Text(widget.title,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onSurface)),
             const SizedBox(height: 8),
             Expanded(
               child: AnimatedBuilder(

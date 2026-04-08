@@ -3,7 +3,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:opensynaptic_dashboard/core/theme/app_theme.dart';
 import 'package:opensynaptic_dashboard/core/theme/theme_provider.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
 import 'package:opensynaptic_dashboard/core/l10n/locale_provider.dart';
 import 'package:opensynaptic_dashboard/core/utils/responsive.dart';
 import 'package:opensynaptic_dashboard/features/dashboard/dashboard_page.dart';
@@ -166,15 +165,19 @@ class _AppDrawer extends ConsumerWidget {
     return Drawer(
       child: ListView(padding: EdgeInsets.zero, children: [
         DrawerHeader(
-          decoration: const BoxDecoration(color: AppColors.surface),
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainer),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text('OpenSynaptic',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+              Text('OpenSynaptic',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface)),
               const SizedBox(height: 4),
-              Text(l.appSubtitle, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+              Text(l.appSubtitle,
+                  style: TextStyle(fontSize: 13,
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
             ],
           ),
         ),

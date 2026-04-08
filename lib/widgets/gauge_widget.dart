@@ -30,7 +30,8 @@ class GaugeWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+            Text(title, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface)),
             Expanded(
               child: SfRadialGauge(
                 axes: <RadialAxis>[
