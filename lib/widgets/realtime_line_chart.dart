@@ -66,8 +66,8 @@ class RealtimeLineChart extends StatelessWidget {
         show: true,
         drawVerticalLine: false,
         horizontalInterval: _calcInterval(),
-        getDrawingHorizontalLine: (_) => FlLine(
-          color: const Color(0xFF2D3F51),
+        getDrawingHorizontalLine: (_) => const FlLine(
+          color: Color(0xFF2D3F51),
           strokeWidth: 0.5,
         ),
       ),

@@ -74,6 +74,7 @@ dependencies:
   crypto: ^3.0.6
   collection: ^1.19.1
   typed_data: ^1.4.0
+  sqflite_common_ffi: ^2.4.0+2
 
 dev_dependencies:
   flutter_test:

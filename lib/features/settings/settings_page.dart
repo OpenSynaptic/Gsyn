@@ -612,8 +612,10 @@ class _InfoTabState extends ConsumerState<_InfoTab> {
     if (confirm == true) {
       await DatabaseHelper.instance.pruneOldData(7);
       await _load();
-      if (mounted) ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(l.pruneDone)));
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(l.pruneDone)));
+      }
     }
   }
 
