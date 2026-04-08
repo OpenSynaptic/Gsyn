@@ -9,6 +9,7 @@ import 'package:opensynaptic_dashboard/features/dashboard/dashboard_page.dart';
 import 'package:opensynaptic_dashboard/features/devices/devices_page.dart';
 import 'package:opensynaptic_dashboard/features/map/map_page.dart';
 import 'package:opensynaptic_dashboard/features/alerts/alerts_page.dart';
+import 'package:opensynaptic_dashboard/features/send/send_page.dart';
 import 'package:opensynaptic_dashboard/features/settings/settings_page.dart';
 import 'package:opensynaptic_dashboard/features/history/history_page.dart';
 import 'package:opensynaptic_dashboard/features/rules_config/rules_config_page.dart';
@@ -72,7 +73,7 @@ class _AppShellState extends State<AppShell> {
     DashboardPage(),
     DeviceListPage(),
     AlertsPage(),
-    Scaffold(body: Center(child: Text('Send'))), // placeholder until send_page restored
+    SendPage(),
     SettingsPage(),
   ];
 
