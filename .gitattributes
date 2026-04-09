@@ -1,0 +1,31 @@
+# Enforce LF line endings for all text files so CI dart format passes
+* text=auto eol=lf
+
+# Dart source files — always LF
+*.dart text eol=lf
+
+# YAML / config files — always LF
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+
+# Shell scripts — LF
+*.sh text eol=lf
+
+# Windows batch files — CRLF (they require it)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binaries — no line-ending conversion
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.jar  binary
+*.zip  binary
+*.so   binary
+*.dylib binary
+
