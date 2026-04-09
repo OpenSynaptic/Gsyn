@@ -1,15 +1,15 @@
-/// Send page — full OpenSynaptic CMD command palette with per-command params.
+﻿/// Send page — full OpenSynaptic CMD command palette with per-command params.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:opensynaptic_dashboard/app.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
-import 'package:opensynaptic_dashboard/core/protocol_constants.dart';
-import 'package:opensynaptic_dashboard/data/models/models.dart';
-import 'package:opensynaptic_dashboard/data/repositories/repositories.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/commands.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/packet_builder.dart';
-import 'package:opensynaptic_dashboard/protocol/transport/transport_manager.dart';
+import 'package:gsyn/app.dart';
+import 'package:gsyn/core/constants.dart';
+import 'package:gsyn/core/protocol_constants.dart';
+import 'package:gsyn/data/models/models.dart';
+import 'package:gsyn/data/repositories/repositories.dart';
+import 'package:gsyn/protocol/codec/commands.dart';
+import 'package:gsyn/protocol/codec/packet_builder.dart';
+import 'package:gsyn/protocol/transport/transport_manager.dart';
 
 // ── Send log entry ────────────────────────────────────────────────────────────
 class _LogEntry {

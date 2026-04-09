@@ -1,4 +1,4 @@
-# OpenSynaptic Dashboard
+﻿# Gsyn
 
 <p align="center">
   <img src="https://img.shields.io/badge/Flutter-3.41.6-02569B?logo=flutter" alt="Flutter">
@@ -30,9 +30,9 @@
 
 ## 简介 Introduction
 
-**OpenSynaptic Dashboard** 是为 OpenSynaptic 物联网节点（固件）设计的实时监控客户端。通过 UDP 或 MQTT 接收传感器数据，提供图表、告警、规则引擎、历史导出等完整功能，支持 Android 手机、Windows/Linux 桌面及 Web 端。
+**Gsyn** 是为 OpenSynaptic 物联网节点（固件）设计的实时监控客户端。通过 UDP 或 MQTT 接收传感器数据，提供图表、告警、规则引擎、历史导出等完整功能，支持 Android 手机、Windows/Linux 桌面及 Web 端。
 
-**OpenSynaptic Dashboard** is a real-time monitoring client for OpenSynaptic IoT nodes. It receives sensor data via UDP or MQTT and provides charts, alerts, a rule engine, history export, and more — running natively on Android, Windows, Linux, and web.
+**Gsyn** is a real-time monitoring client for OpenSynaptic IoT nodes. It receives sensor data via UDP or MQTT and provides charts, alerts, a rule engine, history export, and more — running natively on Android, Windows, Linux, and web.
 
 ---
 

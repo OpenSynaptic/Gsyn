@@ -1,9 +1,9 @@
-// OpenSynaptic DIFF/HEART template engine.
+﻿// OpenSynaptic DIFF/HEART template engine.
 // Port of the template-learning and reconstruction logic from unified_parser.py.
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:opensynaptic_dashboard/protocol/codec/commands.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/base62.dart';
+import 'package:gsyn/protocol/codec/commands.dart';
+import 'package:gsyn/protocol/codec/base62.dart';
 
 /// Cached template state for a (aid, tid) pair.
 class _TemplateState {

@@ -17,8 +17,7 @@ class AppStrings {
   String get appSubtitle => 'IoT Dashboard v1.0';
 
   // ── Dashboard ────────────────────────────────────────────────────────────────
-  String get dashboardTitle =>
-      isZh ? 'OpenSynaptic 仪表盘' : 'OpenSynaptic Dashboard';
+  String get dashboardTitle => isZh ? 'Gsyn' : 'Gsyn';
   String get kpiTotalDevices => isZh ? '总设备数' : 'Total Devices';
   String get kpiOnlineRate => isZh ? '在线率' : 'Online Rate';
   String get kpiActiveAlerts => isZh ? '活跃告警' : 'Active Alerts';

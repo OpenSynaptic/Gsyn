@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
-import 'package:opensynaptic_dashboard/data/models/models.dart';
-import 'package:opensynaptic_dashboard/data/repositories/repositories.dart';
-import 'package:opensynaptic_dashboard/features/settings/settings_page.dart';
+import 'package:gsyn/core/constants.dart';
+import 'package:gsyn/data/models/models.dart';
+import 'package:gsyn/data/repositories/repositories.dart';
+import 'package:gsyn/features/settings/settings_page.dart';
 
 class DeviceMapPage extends ConsumerStatefulWidget {
   const DeviceMapPage({super.key});
@@ -39,7 +39,7 @@ class _DeviceMapPageState extends ConsumerState<DeviceMapPage> {
         children: [
           TileLayer(
             urlTemplate: tileUrl,
-            userAgentPackageName: 'com.opensynaptic.opensynaptic_dashboard',
+            userAgentPackageName: 'com.opensynaptic.gsyn',
           ),
           MarkerLayer(
             markers: _devices.where((d) => d.lat != 0 || d.lng != 0).map((d) {

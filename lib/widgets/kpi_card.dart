@@ -1,6 +1,6 @@
-/// KPI Card widget — animated counter with color-coded border.
+﻿/// KPI Card widget — animated counter with color-coded border.
 import 'package:flutter/material.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
+import 'package:gsyn/core/constants.dart';
 
 class KpiCard extends StatelessWidget {
   final String title;

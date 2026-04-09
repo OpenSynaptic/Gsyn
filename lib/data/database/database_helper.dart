@@ -15,7 +15,7 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     final dir = await getApplicationDocumentsDirectory();
-    final path = '${dir.path}/opensynaptic_dashboard.db';
+    final path = '${dir.path}/gsyn.db';
     return openDatabase(
       path,
       version: 1,

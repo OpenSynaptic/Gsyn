@@ -1,7 +1,7 @@
-/// Pie chart widget — device type distribution.
+﻿/// Pie chart widget — device type distribution.
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
+import 'package:gsyn/core/constants.dart';
 
 class PieChartWidget extends StatelessWidget {
   final String title;

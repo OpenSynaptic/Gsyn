@@ -1,7 +1,7 @@
-/// Dark industrial IoT theme.
+﻿/// Dark industrial IoT theme.
 import 'package:flutter/material.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
-import 'package:opensynaptic_dashboard/core/theme/theme_provider.dart';
+import 'package:gsyn/core/constants.dart';
+import 'package:gsyn/core/theme/theme_provider.dart';
 
 // Light-mode text colors
 const _lightTextPrimary = Color(0xFF202124);

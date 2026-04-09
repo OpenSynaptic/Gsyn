@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:opensynaptic_dashboard/app.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
-import 'package:opensynaptic_dashboard/core/l10n/locale_provider.dart';
-import 'package:opensynaptic_dashboard/core/theme/theme_provider.dart';
-import 'package:opensynaptic_dashboard/data/database/database_helper.dart';
-import 'package:opensynaptic_dashboard/data/repositories/repositories.dart';
-import 'package:opensynaptic_dashboard/features/dashboard/dashboard_config.dart';
-import 'package:opensynaptic_dashboard/protocol/transport/transport_manager.dart';
+import 'package:gsyn/app.dart';
+import 'package:gsyn/core/constants.dart';
+import 'package:gsyn/core/l10n/locale_provider.dart';
+import 'package:gsyn/core/theme/theme_provider.dart';
+import 'package:gsyn/data/database/database_helper.dart';
+import 'package:gsyn/data/repositories/repositories.dart';
+import 'package:gsyn/features/dashboard/dashboard_config.dart';
+import 'package:gsyn/protocol/transport/transport_manager.dart';
 
 // ── Tile-provider constants & provider ────────────────────────────────────────
 const kTileUrlPrefKey = 'map_tile_url';
@@ -867,7 +867,7 @@ class _InfoTabState extends ConsumerState<_InfoTab> {
         children: [
           // ── App info ─────────────────────────────────────────────────────────
           _SectionHeader(icon: Icons.apps, title: l.secAppInfo),
-          _InfoRow(l.infoAppName, 'OpenSynaptic Dashboard'),
+          _InfoRow(l.infoAppName, 'Gsyn'),
           _InfoRow(l.infoVersion, 'v1.0.0'),
           _InfoRow(l.infoProtocol, 'OpenSynaptic Wire Protocol'),
           _InfoRow(l.infoDbSize, '$_dbSizeKb KB'),

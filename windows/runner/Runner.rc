@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.opensynaptic" "\0"
-            VALUE "FileDescription", "opensynaptic_dashboard" "\0"
+            VALUE "FileDescription", "Gsyn" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "opensynaptic_dashboard" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.opensynaptic. All rights reserved." "\0"
-            VALUE "OriginalFilename", "opensynaptic_dashboard.exe" "\0"
-            VALUE "ProductName", "opensynaptic_dashboard" "\0"
+            VALUE "InternalName", "gsyn" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 OpenSynaptic. All rights reserved." "\0"
+            VALUE "OriginalFilename", "gsyn.exe" "\0"
+            VALUE "ProductName", "Gsyn" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

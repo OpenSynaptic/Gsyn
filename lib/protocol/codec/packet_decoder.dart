@@ -1,7 +1,7 @@
-/// OpenSynaptic wire packet decoder — exact port of osrx_packet.c
+﻿/// OpenSynaptic wire packet decoder — exact port of osrx_packet.c
 import 'dart:typed_data';
-import 'package:opensynaptic_dashboard/protocol/codec/crc.dart';
-import 'package:opensynaptic_dashboard/protocol/models/packet_meta.dart';
+import 'package:gsyn/protocol/codec/crc.dart';
+import 'package:gsyn/protocol/models/packet_meta.dart';
 
 class PacketDecoder {
   /// Decode a raw byte buffer into PacketMeta.

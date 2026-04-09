@@ -1,7 +1,7 @@
-/// Repositories — typed CRUD over sqflite.
+﻿/// Repositories — typed CRUD over sqflite.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:opensynaptic_dashboard/data/database/database_helper.dart';
-import 'package:opensynaptic_dashboard/data/models/models.dart';
+import 'package:gsyn/data/database/database_helper.dart';
+import 'package:gsyn/data/models/models.dart';
 
 // ─── Device Repository ───
 

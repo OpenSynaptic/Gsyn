@@ -1,6 +1,6 @@
-/// A fully decoded device message from an OpenSynaptic packet.
-import 'package:opensynaptic_dashboard/protocol/models/packet_meta.dart';
-import 'package:opensynaptic_dashboard/protocol/models/sensor_reading.dart';
+﻿/// A fully decoded device message from an OpenSynaptic packet.
+import 'package:gsyn/protocol/models/packet_meta.dart';
+import 'package:gsyn/protocol/models/sensor_reading.dart';
 
 class DeviceMessage {
   final PacketMeta meta;

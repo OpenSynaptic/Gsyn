@@ -1,11 +1,11 @@
-// Reflexive rules engine
+﻿// Reflexive rules engine
 import 'dart:async';
 import 'dart:convert';
-import 'package:opensynaptic_dashboard/data/models/models.dart';
-import 'package:opensynaptic_dashboard/data/repositories/repositories.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/packet_builder.dart';
-import 'package:opensynaptic_dashboard/protocol/transport/transport_manager.dart';
-import 'package:opensynaptic_dashboard/protocol/models/device_message.dart';
+import 'package:gsyn/data/models/models.dart';
+import 'package:gsyn/data/repositories/repositories.dart';
+import 'package:gsyn/protocol/codec/packet_builder.dart';
+import 'package:gsyn/protocol/transport/transport_manager.dart';
+import 'package:gsyn/protocol/models/device_message.dart';
 
 class RulesEngine {
   final RuleRepository _ruleRepo;

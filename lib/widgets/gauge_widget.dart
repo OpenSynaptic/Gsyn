@@ -1,7 +1,7 @@
-/// Gauge widget — radial gauge with three-color arcs.
+﻿/// Gauge widget — radial gauge with three-color arcs.
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
+import 'package:gsyn/core/constants.dart';
 
 class GaugeWidget extends StatelessWidget {
   final String title;

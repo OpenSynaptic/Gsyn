@@ -1,7 +1,7 @@
-/// Water level widget — animated wave effect showing fill percentage.
+﻿/// Water level widget — animated wave effect showing fill percentage.
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
+import 'package:gsyn/core/constants.dart';
 
 class WaterLevelWidget extends StatefulWidget {
   final String title;

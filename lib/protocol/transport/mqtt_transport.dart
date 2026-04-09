@@ -1,14 +1,14 @@
-/// MQTT transport for OpenSynaptic — connects to broker, subscribes/publishes.
+﻿/// MQTT transport for OpenSynaptic — connects to broker, subscribes/publishes.
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:mqtt5_client/mqtt5_client.dart';
 import 'package:mqtt5_client/mqtt5_server_client.dart';
 import 'package:typed_data/typed_data.dart' as typed;
-import 'package:opensynaptic_dashboard/protocol/codec/packet_decoder.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/body_parser.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/diff_engine.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/commands.dart';
-import 'package:opensynaptic_dashboard/protocol/models/device_message.dart';
+import 'package:gsyn/protocol/codec/packet_decoder.dart';
+import 'package:gsyn/protocol/codec/body_parser.dart';
+import 'package:gsyn/protocol/codec/diff_engine.dart';
+import 'package:gsyn/protocol/codec/commands.dart';
+import 'package:gsyn/protocol/models/device_message.dart';
 
 class MqttTransport {
   MqttServerClient? _client;

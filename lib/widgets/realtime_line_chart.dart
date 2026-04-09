@@ -1,7 +1,7 @@
-/// Real-time line chart widget — auto-scrolling time series.
+﻿/// Real-time line chart widget — auto-scrolling time series.
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
+import 'package:gsyn/core/constants.dart';
 
 class RealtimeLineChart extends StatelessWidget {
   final String title;

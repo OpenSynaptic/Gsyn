@@ -1,9 +1,9 @@
-/// OpenSynaptic body parser — parses FULL body text into SensorReadings.
+﻿/// OpenSynaptic body parser — parses FULL body text into SensorReadings.
 /// Port of osrx_sensor_unpack() + multi-sensor support from template_grammar.
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:opensynaptic_dashboard/protocol/codec/base62.dart';
-import 'package:opensynaptic_dashboard/protocol/models/sensor_reading.dart';
+import 'package:gsyn/protocol/codec/base62.dart';
+import 'package:gsyn/protocol/models/sensor_reading.dart';
 
 class BodyParseResult {
   final String headerAid;

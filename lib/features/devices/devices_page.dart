@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:opensynaptic_dashboard/app.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
-import 'package:opensynaptic_dashboard/core/l10n/locale_provider.dart';
-import 'package:opensynaptic_dashboard/data/models/models.dart';
-import 'package:opensynaptic_dashboard/data/repositories/repositories.dart';
+import 'package:gsyn/app.dart';
+import 'package:gsyn/core/constants.dart';
+import 'package:gsyn/core/l10n/locale_provider.dart';
+import 'package:gsyn/data/models/models.dart';
+import 'package:gsyn/data/repositories/repositories.dart';
 
 class DeviceListPage extends ConsumerStatefulWidget {
   const DeviceListPage({super.key});

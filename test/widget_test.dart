@@ -1,9 +1,9 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/base62.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/crc.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/packet_builder.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/packet_decoder.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/commands.dart';
+﻿import 'package:flutter_test/flutter_test.dart';
+import 'package:gsyn/protocol/codec/base62.dart';
+import 'package:gsyn/protocol/codec/crc.dart';
+import 'package:gsyn/protocol/codec/packet_builder.dart';
+import 'package:gsyn/protocol/codec/packet_decoder.dart';
+import 'package:gsyn/protocol/codec/commands.dart';
 import 'dart:typed_data';
 
 void main() {

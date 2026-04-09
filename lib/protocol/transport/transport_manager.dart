@@ -1,10 +1,10 @@
-/// Unified transport manager — merges UDP + MQTT streams, routes commands.
+﻿/// Unified transport manager — merges UDP + MQTT streams, routes commands.
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:opensynaptic_dashboard/protocol/transport/udp_transport.dart';
-import 'package:opensynaptic_dashboard/protocol/transport/mqtt_transport.dart';
-import 'package:opensynaptic_dashboard/protocol/models/device_message.dart';
+import 'package:gsyn/protocol/transport/udp_transport.dart';
+import 'package:gsyn/protocol/transport/mqtt_transport.dart';
+import 'package:gsyn/protocol/models/device_message.dart';
 
 class TransportManager {
   final UdpTransport udp = UdpTransport();

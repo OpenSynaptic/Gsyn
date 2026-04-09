@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
-import 'package:opensynaptic_dashboard/core/l10n/locale_provider.dart';
-import 'package:opensynaptic_dashboard/protocol/transport/transport_manager.dart';
-import 'package:opensynaptic_dashboard/data/database/database_helper.dart';
-import 'package:opensynaptic_dashboard/widgets/kpi_card.dart';
+import 'package:gsyn/core/constants.dart';
+import 'package:gsyn/core/l10n/locale_provider.dart';
+import 'package:gsyn/protocol/transport/transport_manager.dart';
+import 'package:gsyn/data/database/database_helper.dart';
+import 'package:gsyn/widgets/kpi_card.dart';
 
 class SystemHealthPage extends ConsumerStatefulWidget {
   const SystemHealthPage({super.key});

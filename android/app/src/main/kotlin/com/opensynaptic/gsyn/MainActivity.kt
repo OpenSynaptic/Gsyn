@@ -1,4 +1,4 @@
-package com.opensynaptic.opensynaptic_dashboard
+package com.opensynaptic.gsyn
 
 import io.flutter.embedding.android.FlutterActivity
 

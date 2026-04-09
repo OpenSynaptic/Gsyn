@@ -1,24 +1,24 @@
-/// Main dashboard page — KPI cards + charts + gauges.
+﻿/// Main dashboard page — KPI cards + charts + gauges.
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
-import 'package:opensynaptic_dashboard/core/l10n/locale_provider.dart';
-import 'package:opensynaptic_dashboard/core/utils/responsive.dart';
-import 'package:opensynaptic_dashboard/protocol/transport/transport_manager.dart';
-import 'package:opensynaptic_dashboard/protocol/models/device_message.dart';
-import 'package:opensynaptic_dashboard/protocol/models/sensor_reading.dart';
-import 'package:opensynaptic_dashboard/data/repositories/repositories.dart';
-import 'package:opensynaptic_dashboard/data/models/models.dart';
-import 'package:opensynaptic_dashboard/widgets/kpi_card.dart';
-import 'package:opensynaptic_dashboard/widgets/realtime_line_chart.dart';
-import 'package:opensynaptic_dashboard/widgets/gauge_widget.dart';
-import 'package:opensynaptic_dashboard/widgets/water_level_widget.dart';
-import 'package:opensynaptic_dashboard/app.dart';
-import 'package:opensynaptic_dashboard/widgets/bar_chart_widget.dart';
-import 'package:opensynaptic_dashboard/widgets/pie_chart_widget.dart';
-import 'package:opensynaptic_dashboard/features/dashboard/dashboard_config.dart';
+import 'package:gsyn/core/constants.dart';
+import 'package:gsyn/core/l10n/locale_provider.dart';
+import 'package:gsyn/core/utils/responsive.dart';
+import 'package:gsyn/protocol/transport/transport_manager.dart';
+import 'package:gsyn/protocol/models/device_message.dart';
+import 'package:gsyn/protocol/models/sensor_reading.dart';
+import 'package:gsyn/data/repositories/repositories.dart';
+import 'package:gsyn/data/models/models.dart';
+import 'package:gsyn/widgets/kpi_card.dart';
+import 'package:gsyn/widgets/realtime_line_chart.dart';
+import 'package:gsyn/widgets/gauge_widget.dart';
+import 'package:gsyn/widgets/water_level_widget.dart';
+import 'package:gsyn/app.dart';
+import 'package:gsyn/widgets/bar_chart_widget.dart';
+import 'package:gsyn/widgets/pie_chart_widget.dart';
+import 'package:gsyn/features/dashboard/dashboard_config.dart';
 
 class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({super.key});

@@ -1,12 +1,12 @@
-/// UDP transport for OpenSynaptic — receives/sends datagrams.
+﻿/// UDP transport for OpenSynaptic — receives/sends datagrams.
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:opensynaptic_dashboard/protocol/codec/packet_decoder.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/body_parser.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/diff_engine.dart';
-import 'package:opensynaptic_dashboard/protocol/codec/commands.dart';
-import 'package:opensynaptic_dashboard/protocol/models/device_message.dart';
+import 'package:gsyn/protocol/codec/packet_decoder.dart';
+import 'package:gsyn/protocol/codec/body_parser.dart';
+import 'package:gsyn/protocol/codec/diff_engine.dart';
+import 'package:gsyn/protocol/codec/commands.dart';
+import 'package:gsyn/protocol/models/device_message.dart';
 
 class UdpTransport {
   RawDatagramSocket? _socket;

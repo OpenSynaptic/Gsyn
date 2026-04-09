@@ -1,7 +1,7 @@
-/// Bar chart widget (supports grouped and stacked).
+﻿/// Bar chart widget (supports grouped and stacked).
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:opensynaptic_dashboard/core/constants.dart';
+import 'package:gsyn/core/constants.dart';
 
 class BarChartWidget extends StatelessWidget {
   final String title;

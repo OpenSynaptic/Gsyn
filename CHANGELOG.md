@@ -1,6 +1,6 @@
-# Changelog
+﻿# Changelog
 
-All notable changes to OpenSynaptic Dashboard will be documented in this file.
+All notable changes to Gsyn will be documented in this file.
 
 ---
 

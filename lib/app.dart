@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:opensynaptic_dashboard/core/theme/app_theme.dart';
-import 'package:opensynaptic_dashboard/core/theme/theme_provider.dart';
-import 'package:opensynaptic_dashboard/core/l10n/locale_provider.dart';
-import 'package:opensynaptic_dashboard/core/utils/responsive.dart';
-import 'package:opensynaptic_dashboard/features/dashboard/dashboard_page.dart';
-import 'package:opensynaptic_dashboard/features/devices/devices_page.dart';
-import 'package:opensynaptic_dashboard/features/map/map_page.dart';
-import 'package:opensynaptic_dashboard/features/alerts/alerts_page.dart';
-import 'package:opensynaptic_dashboard/features/send/send_page.dart';
-import 'package:opensynaptic_dashboard/features/settings/settings_page.dart';
-import 'package:opensynaptic_dashboard/features/history/history_page.dart';
-import 'package:opensynaptic_dashboard/features/rules_config/rules_config_page.dart';
-import 'package:opensynaptic_dashboard/features/system_health/system_health_page.dart';
+import 'package:gsyn/core/theme/app_theme.dart';
+import 'package:gsyn/core/theme/theme_provider.dart';
+import 'package:gsyn/core/l10n/locale_provider.dart';
+import 'package:gsyn/core/utils/responsive.dart';
+import 'package:gsyn/features/dashboard/dashboard_page.dart';
+import 'package:gsyn/features/devices/devices_page.dart';
+import 'package:gsyn/features/map/map_page.dart';
+import 'package:gsyn/features/alerts/alerts_page.dart';
+import 'package:gsyn/features/send/send_page.dart';
+import 'package:gsyn/features/settings/settings_page.dart';
+import 'package:gsyn/features/history/history_page.dart';
+import 'package:gsyn/features/rules_config/rules_config_page.dart';
+import 'package:gsyn/features/system_health/system_health_page.dart';
 
 class OsDashboardApp extends ConsumerWidget {
   const OsDashboardApp({super.key});
@@ -23,7 +23,7 @@ class OsDashboardApp extends ConsumerWidget {
     final bg = ref.watch(bgProvider);
     final locale = ref.watch(localeProvider);
     return MaterialApp(
-      title: 'OpenSynaptic Dashboard',
+      title: 'Gsyn',
       theme: AppTheme.build(preset.seedColor, bg),
       debugShowCheckedModeBanner: false,
       locale: locale,
