@@ -209,4 +209,4 @@ git push origin feat/your-feature
 
 ## License
 
-MIT © 2026 OpenSynaptic
+APACHE 2.0 © 2026 OpenSynaptic
