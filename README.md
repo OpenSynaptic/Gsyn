@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Flutter-3.41.6-02569B?logo=flutter" alt="Flutter">
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20Windows%20%7C%20Linux-brightgreen" alt="Platforms">
-  <img src="https://img.shields.io/badge/License-MIT-blue" alt="License">
+  <img src="https://img.shields.io/badge/License-Apache--2.0-blue" alt="License">
   <img src="https://img.shields.io/github/actions/workflow/status/OpenSynaptic/Gsyn/release.yml?label=CI%2FCD" alt="CI/CD">
   <img src="https://img.shields.io/badge/Language-中文%20%7C%20English-orange" alt="Bilingual">
 </p>
