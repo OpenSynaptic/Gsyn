@@ -277,12 +277,18 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
       ),
     ];
     if (cards.isEmpty) return const SizedBox.shrink();
-    return Row(children: [
-      for (int i = 0; i < cards.length; i++) ...[
-        if (i > 0) const SizedBox(width: 8),
-        Expanded(child: cards[i]),
-      ],
-    ]);
+    // IntrinsicHeight makes all cards the same height as the tallest one
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (int i = 0; i < cards.length; i++) ...[
+            if (i > 0) const SizedBox(width: 8),
+            Expanded(child: cards[i]),
+          ],
+        ],
+      ),
+    );
   }
 
   // ── Mobile layout (unchanged) ───────────────────────────────────────────────

@@ -81,7 +81,10 @@ class _AppShellState extends State<AppShell> {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, _) {
       final l       = ref.watch(appStringsProvider);
-      final desktop = Responsive.isDesktop(context);
+      final screenSize = MediaQuery.of(context).size;
+      // If height ≤ 500 (phone landscape), fall back to mobile nav to prevent
+      // NavigationRail overflow on short screens.
+      final desktop = Responsive.isDesktop(context) && screenSize.height > 500;
       final body    = IndexedStack(index: _index, children: _pages);
 
       if (desktop) {
@@ -115,33 +118,34 @@ class _AppShellState extends State<AppShell> {
                       Divider(height: 12,
                           color: Theme.of(context).dividerColor.withValues(alpha: 0.5)),
                       const SizedBox(height: 4),
-                      // Row 1: Map  History
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                        _RailExtra(
-                          icon: Icons.map, label: l.drawerMap,
-                          showLabel: MediaQuery.of(context).size.width >= 1200,
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DeviceMapPage())),
-                        ),
-                        _RailExtra(
-                          icon: Icons.history, label: l.drawerHistory,
-                          showLabel: MediaQuery.of(context).size.width >= 1200,
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryPage())),
-                        ),
-                      ]),
-                      const SizedBox(height: 4),
-                      // Row 2: Rules  Health
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                        _RailExtra(
-                          icon: Icons.rule, label: l.drawerRules,
-                          showLabel: MediaQuery.of(context).size.width >= 1200,
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RulesConfigPage())),
-                        ),
-                        _RailExtra(
-                          icon: Icons.health_and_safety, label: l.drawerHealth,
-                          showLabel: MediaQuery.of(context).size.width >= 1200,
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SystemHealthPage())),
-                        ),
-                      ]),
+                      if (screenSize.width >= 1200) ...[
+                        // Extended rail: single row of 4 equally-spaced items
+                        Row(children: [
+                          Expanded(child: _RailExtra(icon: Icons.map, label: l.drawerMap, showLabel: true,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DeviceMapPage())))),
+                          Expanded(child: _RailExtra(icon: Icons.history, label: l.drawerHistory, showLabel: true,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryPage())))),
+                          Expanded(child: _RailExtra(icon: Icons.rule, label: l.drawerRules, showLabel: true,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RulesConfigPage())))),
+                          Expanded(child: _RailExtra(icon: Icons.health_and_safety, label: l.drawerHealth, showLabel: true,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SystemHealthPage())))),
+                        ]),
+                      ] else ...[
+                        // Compact rail: 2×2 grid
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                          _RailExtra(icon: Icons.map, label: l.drawerMap,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DeviceMapPage()))),
+                          _RailExtra(icon: Icons.history, label: l.drawerHistory,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryPage()))),
+                        ]),
+                        const SizedBox(height: 4),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                          _RailExtra(icon: Icons.rule, label: l.drawerRules,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RulesConfigPage()))),
+                          _RailExtra(icon: Icons.health_and_safety, label: l.drawerHealth,
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SystemHealthPage()))),
+                        ]),
+                      ],
                     ]),
                   ),
                 ),
@@ -243,13 +247,16 @@ class _RailExtra extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
           child: showLabel
-              ? Column(mainAxisSize: MainAxisSize.min, children: [
+              ? Column(mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
                   Icon(icon, size: 18, color: color),
                   const SizedBox(height: 2),
                   Text(label,
                       style: TextStyle(fontSize: 9, color: color),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 1),
+                      maxLines: 1,
+                      textAlign: TextAlign.center),
                 ])
               : Icon(icon, size: 20, color: color),
         ),
