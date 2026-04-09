@@ -7,11 +7,7 @@ class PieChartWidget extends StatelessWidget {
   final String title;
   final Map<String, double> data;
 
-  const PieChartWidget({
-    super.key,
-    required this.title,
-    required this.data,
-  });
+  const PieChartWidget({super.key, required this.title, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -22,29 +18,49 @@ class PieChartWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,
-                color: Theme.of(context).colorScheme.onSurface)),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
             const SizedBox(height: 12),
             Expanded(
               child: entries.isEmpty
-                  ? const Center(child: Text('No data', style: TextStyle(color: AppColors.textSecondary)))
+                  ? const Center(
+                      child: Text(
+                        'No data',
+                        style: TextStyle(color: AppColors.textSecondary),
+                      ),
+                    )
                   : Row(
                       children: [
                         Expanded(
                           flex: 3,
-                          child: PieChart(PieChartData(
-                            sections: List.generate(entries.length, (i) {
-                              return PieChartSectionData(
-                                value: entries[i].value,
-                                color: AppColors.chartPalette[i % AppColors.chartPalette.length],
-                                title: '${entries[i].value.toStringAsFixed(0)}%',
-                                titleStyle: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold),
-                                radius: 50,
-                              );
-                            }),
-                            centerSpaceRadius: 30,
-                            sectionsSpace: 2,
-                          )),
+                          child: PieChart(
+                            PieChartData(
+                              sections: List.generate(entries.length, (i) {
+                                return PieChartSectionData(
+                                  value: entries[i].value,
+                                  color:
+                                      AppColors.chartPalette[i %
+                                          AppColors.chartPalette.length],
+                                  title:
+                                      '${entries[i].value.toStringAsFixed(0)}%',
+                                  titleStyle: const TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  radius: 50,
+                                );
+                              }),
+                              centerSpaceRadius: 30,
+                              sectionsSpace: 2,
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -54,22 +70,31 @@ class PieChartWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: List.generate(entries.length, (i) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 2),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 2,
+                                ),
                                 child: Row(
                                   children: [
                                     Container(
                                       width: 10,
                                       height: 10,
                                       decoration: BoxDecoration(
-                                        color: AppColors.chartPalette[i % AppColors.chartPalette.length],
+                                        color:
+                                            AppColors.chartPalette[i %
+                                                AppColors.chartPalette.length],
                                         borderRadius: BorderRadius.circular(2),
                                       ),
                                     ),
                                     const SizedBox(width: 6),
                                     Expanded(
-                                      child: Text(entries[i].key,
-                                          style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
-                                          overflow: TextOverflow.ellipsis),
+                                      child: Text(
+                                        entries[i].key,
+                                        style: const TextStyle(
+                                          fontSize: 11,
+                                          color: AppColors.textSecondary,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -86,4 +111,3 @@ class PieChartWidget extends StatelessWidget {
     );
   }
 }
-

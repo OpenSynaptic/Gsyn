@@ -45,9 +45,14 @@ class _WaterLevelWidgetState extends State<WaterLevelWidget>
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            Text(widget.title,
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onSurface)),
+            Text(
+              widget.title,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
             const SizedBox(height: 8),
             Expanded(
               child: AnimatedBuilder(
@@ -75,8 +80,13 @@ class _WaterLevelWidgetState extends State<WaterLevelWidget>
             if (widget.label.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
-                child: Text(widget.label,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                child: Text(
+                  widget.label,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ),
           ],
         ),
@@ -108,7 +118,9 @@ class _WaterPainter extends CustomPainter {
 
     // Clip to circle
     canvas.save();
-    canvas.clipPath(Path()..addOval(Rect.fromCircle(center: center, radius: r - 1)));
+    canvas.clipPath(
+      Path()..addOval(Rect.fromCircle(center: center, radius: r - 1)),
+    );
 
     // Water fill
     final waterY = center.dy + r - (percentage * r * 2);
@@ -126,13 +138,10 @@ class _WaterPainter extends CustomPainter {
     final color = percentage > 0.8
         ? AppColors.zoneNormal
         : percentage > 0.3
-            ? AppColors.primary
-            : AppColors.danger;
+        ? AppColors.primary
+        : AppColors.danger;
 
-    canvas.drawPath(
-      path,
-      Paint()..color = color.withValues(alpha: 0.7),
-    );
+    canvas.drawPath(path, Paint()..color = color.withValues(alpha: 0.7));
     canvas.restore();
   }
 
@@ -140,4 +149,3 @@ class _WaterPainter extends CustomPainter {
   bool shouldRepaint(covariant _WaterPainter old) =>
       old.percentage != percentage || old.animValue != animValue;
 }
-

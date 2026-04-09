@@ -29,12 +29,23 @@ class RealtimeLineChart extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,
-                color: Theme.of(context).colorScheme.onSurface)),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
             const SizedBox(height: 12),
             Expanded(
               child: spots.isEmpty
-                  ? const Center(child: Text('No data', style: TextStyle(color: AppColors.textSecondary)))
+                  ? const Center(
+                      child: Text(
+                        'No data',
+                        style: TextStyle(color: AppColors.textSecondary),
+                      ),
+                    )
                   : LineChart(_buildChartData()),
             ),
           ],
@@ -46,20 +57,24 @@ class RealtimeLineChart extends StatelessWidget {
   LineChartData _buildChartData() {
     final extraLines = <HorizontalLine>[];
     if (warningThreshold != null) {
-      extraLines.add(HorizontalLine(
-        y: warningThreshold!,
-        color: AppColors.warning.withValues(alpha: 0.6),
-        strokeWidth: 1,
-        dashArray: [5, 5],
-      ));
+      extraLines.add(
+        HorizontalLine(
+          y: warningThreshold!,
+          color: AppColors.warning.withValues(alpha: 0.6),
+          strokeWidth: 1,
+          dashArray: [5, 5],
+        ),
+      );
     }
     if (dangerThreshold != null) {
-      extraLines.add(HorizontalLine(
-        y: dangerThreshold!,
-        color: AppColors.danger.withValues(alpha: 0.6),
-        strokeWidth: 1,
-        dashArray: [5, 5],
-      ));
+      extraLines.add(
+        HorizontalLine(
+          y: dangerThreshold!,
+          color: AppColors.danger.withValues(alpha: 0.6),
+          strokeWidth: 1,
+          dashArray: [5, 5],
+        ),
+      );
     }
 
     return LineChartData(
@@ -67,10 +82,8 @@ class RealtimeLineChart extends StatelessWidget {
         show: true,
         drawVerticalLine: false,
         horizontalInterval: _calcInterval(),
-        getDrawingHorizontalLine: (_) => const FlLine(
-          color: Color(0xFF2D3F51),
-          strokeWidth: 0.5,
-        ),
+        getDrawingHorizontalLine: (_) =>
+            const FlLine(color: Color(0xFF2D3F51), strokeWidth: 0.5),
       ),
       titlesData: FlTitlesData(
         leftTitles: AxisTitles(
@@ -79,13 +92,20 @@ class RealtimeLineChart extends StatelessWidget {
             reservedSize: 44,
             getTitlesWidget: (val, _) => Text(
               val.toStringAsFixed(0),
-              style: const TextStyle(fontSize: 10, color: AppColors.textSecondary),
+              style: const TextStyle(
+                fontSize: 10,
+                color: AppColors.textSecondary,
+              ),
             ),
           ),
         ),
-        bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        bottomTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
         topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        rightTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
       ),
       borderData: FlBorderData(show: false),
       extraLinesData: ExtraLinesData(horizontalLines: extraLines),
@@ -106,10 +126,12 @@ class RealtimeLineChart extends StatelessWidget {
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
           getTooltipItems: (spots) => spots
-              .map((s) => LineTooltipItem(
-                    '${s.y.toStringAsFixed(1)} $unit',
-                    TextStyle(color: lineColor, fontSize: 12),
-                  ))
+              .map(
+                (s) => LineTooltipItem(
+                  '${s.y.toStringAsFixed(1)} $unit',
+                  TextStyle(color: lineColor, fontSize: 12),
+                ),
+              )
               .toList(),
         ),
       ),
@@ -128,4 +150,3 @@ class RealtimeLineChart extends StatelessWidget {
     return (range / 5).ceilToDouble();
   }
 }
-

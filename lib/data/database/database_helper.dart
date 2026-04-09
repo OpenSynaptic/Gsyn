@@ -52,7 +52,8 @@ class DatabaseHelper {
       )
     ''');
     await db.execute(
-        'CREATE INDEX idx_sensor_data_aid_ts ON sensor_data(device_aid, timestamp_ms)');
+      'CREATE INDEX idx_sensor_data_aid_ts ON sensor_data(device_aid, timestamp_ms)',
+    );
 
     await db.execute('''
       CREATE TABLE alerts (
@@ -65,7 +66,9 @@ class DatabaseHelper {
         created_ms INTEGER NOT NULL
       )
     ''');
-    await db.execute('CREATE INDEX idx_alerts_aid_level ON alerts(device_aid, level)');
+    await db.execute(
+      'CREATE INDEX idx_alerts_aid_level ON alerts(device_aid, level)',
+    );
 
     await db.execute('''
       CREATE TABLE rules (
@@ -123,7 +126,8 @@ class DatabaseHelper {
     // Insert default admin user (password: admin)
     await db.insert('users', {
       'username': 'admin',
-      'password_hash': '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
+      'password_hash':
+          '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
       'role': 'admin',
       'created_ms': DateTime.now().millisecondsSinceEpoch,
     });
@@ -149,7 +153,10 @@ class DatabaseHelper {
     final cutoff = DateTime.now()
         .subtract(Duration(days: retentionDays))
         .millisecondsSinceEpoch;
-    return db.delete('sensor_data', where: 'timestamp_ms < ?', whereArgs: [cutoff]);
+    return db.delete(
+      'sensor_data',
+      where: 'timestamp_ms < ?',
+      whereArgs: [cutoff],
+    );
   }
 }
-

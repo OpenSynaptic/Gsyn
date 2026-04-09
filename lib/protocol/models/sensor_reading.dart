@@ -17,4 +17,3 @@ class SensorReading {
   @override
   String toString() => 'SensorReading($sensorId=$value $unit)';
 }
-

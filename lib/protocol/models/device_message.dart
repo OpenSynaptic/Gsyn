@@ -27,4 +27,3 @@ class DeviceMessage {
   String toString() =>
       'DeviceMessage(aid=$deviceAid, sensors=${readings.length}, ts=$timestampSec)';
 }
-

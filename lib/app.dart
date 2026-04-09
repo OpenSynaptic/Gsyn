@@ -20,7 +20,7 @@ class OsDashboardApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preset = ref.watch(themeProvider);
-    final bg     = ref.watch(bgProvider);
+    final bg = ref.watch(bgProvider);
     final locale = ref.watch(localeProvider);
     return MaterialApp(
       title: 'OpenSynaptic Dashboard',
@@ -50,17 +50,26 @@ class _NavDest {
 }
 
 final List<_NavDest> _kDests = [
-  _NavDest(Icons.dashboard_outlined,     Icons.dashboard,     (l) => l.navDashboard),
-  _NavDest(Icons.devices_other_outlined, Icons.devices_other, (l) => l.navDevices),
-  _NavDest(Icons.notifications_outlined, Icons.notifications, (l) => l.navAlerts),
-  _NavDest(Icons.send_outlined,          Icons.send,          (l) => l.navSend),
-  _NavDest(Icons.settings_outlined,      Icons.settings,      (l) => l.navSettings),
+  _NavDest(Icons.dashboard_outlined, Icons.dashboard, (l) => l.navDashboard),
+  _NavDest(
+    Icons.devices_other_outlined,
+    Icons.devices_other,
+    (l) => l.navDevices,
+  ),
+  _NavDest(
+    Icons.notifications_outlined,
+    Icons.notifications,
+    (l) => l.navAlerts,
+  ),
+  _NavDest(Icons.send_outlined, Icons.send, (l) => l.navSend),
+  _NavDest(Icons.settings_outlined, Icons.settings, (l) => l.navSettings),
 ];
 
 // ── AppShell ──────────────────────────────────────────────────────────────────
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
-  static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> scaffoldKey =
+      GlobalKey<ScaffoldState>();
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -79,108 +88,232 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (context, ref, _) {
-      final l       = ref.watch(appStringsProvider);
-      final screenSize = MediaQuery.of(context).size;
-      // If height ≤ 500 (phone landscape), fall back to mobile nav to prevent
-      // NavigationRail overflow on short screens.
-      final desktop = Responsive.isDesktop(context) && screenSize.height > 500;
-      final body    = IndexedStack(index: _index, children: _pages);
+    return Consumer(
+      builder: (context, ref, _) {
+        final l = ref.watch(appStringsProvider);
+        final screenSize = MediaQuery.of(context).size;
+        // If height ≤ 500 (phone landscape), fall back to mobile nav to prevent
+        // NavigationRail overflow on short screens.
+        final desktop =
+            Responsive.isDesktop(context) && screenSize.height > 500;
+        final body = IndexedStack(index: _index, children: _pages);
 
-      if (desktop) {
-        // ── Desktop / Tablet layout: NavigationRail (left sidebar) ──────────
+        if (desktop) {
+          // ── Desktop / Tablet layout: NavigationRail (left sidebar) ──────────
+          return Scaffold(
+            key: AppShell.scaffoldKey,
+            body: Row(
+              children: [
+                NavigationRail(
+                  selectedIndex: _index,
+                  onDestinationSelected: (i) => setState(() => _index = i),
+                  extended: MediaQuery.of(context).size.width >= 1200,
+                  labelType: MediaQuery.of(context).size.width >= 1200
+                      ? NavigationRailLabelType.none
+                      : NavigationRailLabelType.selected,
+                  leading: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.hub_outlined, size: 28),
+                        const SizedBox(height: 2),
+                        if (MediaQuery.of(context).size.width >= 1200)
+                          const Text(
+                            'OpenSynaptic',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  trailing: Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 16,
+                          left: 4,
+                          right: 4,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Divider(
+                              height: 12,
+                              color: Theme.of(
+                                context,
+                              ).dividerColor.withValues(alpha: 0.5),
+                            ),
+                            const SizedBox(height: 4),
+                            if (screenSize.width >= 1200) ...[
+                              // Extended rail: single row of 4 equally-spaced items
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: _RailExtra(
+                                      icon: Icons.map,
+                                      label: l.drawerMap,
+                                      showLabel: true,
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => const DeviceMapPage(),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: _RailExtra(
+                                      icon: Icons.history,
+                                      label: l.drawerHistory,
+                                      showLabel: true,
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => const HistoryPage(),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: _RailExtra(
+                                      icon: Icons.rule,
+                                      label: l.drawerRules,
+                                      showLabel: true,
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              const RulesConfigPage(),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: _RailExtra(
+                                      icon: Icons.health_and_safety,
+                                      label: l.drawerHealth,
+                                      showLabel: true,
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              const SystemHealthPage(),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ] else ...[
+                              // Compact rail: 2×2 grid
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  _RailExtra(
+                                    icon: Icons.map,
+                                    label: l.drawerMap,
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const DeviceMapPage(),
+                                      ),
+                                    ),
+                                  ),
+                                  _RailExtra(
+                                    icon: Icons.history,
+                                    label: l.drawerHistory,
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const HistoryPage(),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  _RailExtra(
+                                    icon: Icons.rule,
+                                    label: l.drawerRules,
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const RulesConfigPage(),
+                                      ),
+                                    ),
+                                  ),
+                                  _RailExtra(
+                                    icon: Icons.health_and_safety,
+                                    label: l.drawerHealth,
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            const SystemHealthPage(),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  destinations: _kDests
+                      .map(
+                        (d) => NavigationRailDestination(
+                          icon: Icon(d.icon),
+                          selectedIcon: Icon(d.activeIcon),
+                          label: Text(d.label(l)),
+                        ),
+                      )
+                      .toList(),
+                ),
+                const VerticalDivider(thickness: 1, width: 1),
+                Expanded(child: body),
+              ],
+            ),
+          );
+        }
+
+        // ── Mobile layout: bottom NavigationBar + drawer ─────────────────────
         return Scaffold(
           key: AppShell.scaffoldKey,
-          body: Row(children: [
-            NavigationRail(
-              selectedIndex: _index,
-              onDestinationSelected: (i) => setState(() => _index = i),
-              extended: MediaQuery.of(context).size.width >= 1200,
-              labelType: MediaQuery.of(context).size.width >= 1200
-                  ? NavigationRailLabelType.none
-                  : NavigationRailLabelType.selected,
-              leading: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const Icon(Icons.hub_outlined, size: 28),
-                  const SizedBox(height: 2),
-                  if (MediaQuery.of(context).size.width >= 1200)
-                    const Text('OpenSynaptic',
-                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-                ]),
-              ),
-              trailing: Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 16, left: 4, right: 4),
-                    child: Column(mainAxisSize: MainAxisSize.min, children: [
-                      Divider(height: 12,
-                          color: Theme.of(context).dividerColor.withValues(alpha: 0.5)),
-                      const SizedBox(height: 4),
-                      if (screenSize.width >= 1200) ...[
-                        // Extended rail: single row of 4 equally-spaced items
-                        Row(children: [
-                          Expanded(child: _RailExtra(icon: Icons.map, label: l.drawerMap, showLabel: true,
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DeviceMapPage())))),
-                          Expanded(child: _RailExtra(icon: Icons.history, label: l.drawerHistory, showLabel: true,
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryPage())))),
-                          Expanded(child: _RailExtra(icon: Icons.rule, label: l.drawerRules, showLabel: true,
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RulesConfigPage())))),
-                          Expanded(child: _RailExtra(icon: Icons.health_and_safety, label: l.drawerHealth, showLabel: true,
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SystemHealthPage())))),
-                        ]),
-                      ] else ...[
-                        // Compact rail: 2×2 grid
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                          _RailExtra(icon: Icons.map, label: l.drawerMap,
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DeviceMapPage()))),
-                          _RailExtra(icon: Icons.history, label: l.drawerHistory,
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryPage()))),
-                        ]),
-                        const SizedBox(height: 4),
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                          _RailExtra(icon: Icons.rule, label: l.drawerRules,
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RulesConfigPage()))),
-                          _RailExtra(icon: Icons.health_and_safety, label: l.drawerHealth,
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SystemHealthPage()))),
-                        ]),
-                      ],
-                    ]),
+          body: body,
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: _index,
+            onDestinationSelected: (i) => setState(() => _index = i),
+            destinations: _kDests
+                .map(
+                  (d) => NavigationDestination(
+                    icon: Icon(d.icon),
+                    selectedIcon: Icon(d.activeIcon),
+                    label: d.label(l),
                   ),
-                ),
-              ),
-              destinations: _kDests.map((d) => NavigationRailDestination(
-                icon: Icon(d.icon),
-                selectedIcon: Icon(d.activeIcon),
-                label: Text(d.label(l)),
-              )).toList(),
-            ),
-            const VerticalDivider(thickness: 1, width: 1),
-            Expanded(child: body),
-          ]),
+                )
+                .toList(),
+          ),
+          drawer: _AppDrawer(
+            currentIndex: _index,
+            onNav: (i) {
+              Navigator.pop(context);
+              setState(() => _index = i);
+            },
+          ),
         );
-      }
-
-      // ── Mobile layout: bottom NavigationBar + drawer ─────────────────────
-      return Scaffold(
-        key: AppShell.scaffoldKey,
-        body: body,
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: _index,
-          onDestinationSelected: (i) => setState(() => _index = i),
-          destinations: _kDests.map((d) => NavigationDestination(
-            icon: Icon(d.icon),
-            selectedIcon: Icon(d.activeIcon),
-            label: d.label(l),
-          )).toList(),
-        ),
-        drawer: _AppDrawer(
-          currentIndex: _index,
-          onNav: (i) { Navigator.pop(context); setState(() => _index = i); },
-        ),
-      );
-    });
+      },
+    );
   }
 }
 
@@ -194,31 +327,90 @@ class _AppDrawer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = ref.watch(appStringsProvider);
     return Drawer(
-      child: ListView(padding: EdgeInsets.zero, children: [
-        DrawerHeader(
-          decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainer),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('OpenSynaptic',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface)),
-              const SizedBox(height: 4),
-              Text(l.appSubtitle,
-                  style: TextStyle(fontSize: 13,
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
-            ],
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainer,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'OpenSynaptic',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  l.appSubtitle,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        ListTile(leading: const Icon(Icons.map),            title: Text(l.drawerMap),    onTap: () { Navigator.pop(context); Navigator.push(context, MaterialPageRoute(builder: (_) => const DeviceMapPage())); }),
-        ListTile(leading: const Icon(Icons.history),        title: Text(l.drawerHistory),onTap: () { Navigator.pop(context); Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryPage())); }),
-        ListTile(leading: const Icon(Icons.rule),           title: Text(l.drawerRules),  onTap: () { Navigator.pop(context); Navigator.push(context, MaterialPageRoute(builder: (_) => const RulesConfigPage())); }),
-        ListTile(leading: const Icon(Icons.health_and_safety), title: Text(l.drawerHealth), onTap: () { Navigator.pop(context); Navigator.push(context, MaterialPageRoute(builder: (_) => const SystemHealthPage())); }),
-        const Divider(),
-        ListTile(leading: const Icon(Icons.settings), title: Text(l.navSettings), onTap: () => onNav(4)),
-      ]),
+          ListTile(
+            leading: const Icon(Icons.map),
+            title: Text(l.drawerMap),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const DeviceMapPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.history),
+            title: Text(l.drawerHistory),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const HistoryPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.rule),
+            title: Text(l.drawerRules),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const RulesConfigPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.health_and_safety),
+            title: Text(l.drawerHealth),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SystemHealthPage()),
+              );
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: Text(l.navSettings),
+            onTap: () => onNav(4),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -238,7 +430,9 @@ class _RailExtra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.65);
+    final color = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: 0.65);
     return Tooltip(
       message: label,
       child: InkWell(
@@ -247,17 +441,21 @@ class _RailExtra extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
           child: showLabel
-              ? Column(mainAxisSize: MainAxisSize.min,
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                  Icon(icon, size: 18, color: color),
-                  const SizedBox(height: 2),
-                  Text(label,
+                    Icon(icon, size: 18, color: color),
+                    const SizedBox(height: 2),
+                    Text(
+                      label,
                       style: TextStyle(fontSize: 9, color: color),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                      textAlign: TextAlign.center),
-                ])
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                )
               : Icon(icon, size: 20, color: color),
         ),
       ),

@@ -25,23 +25,39 @@ class BarChartWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,
-                color: Theme.of(context).colorScheme.onSurface)),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
             const SizedBox(height: 12),
             Expanded(
               child: values.isEmpty
-                  ? const Center(child: Text('No data', style: TextStyle(color: AppColors.textSecondary)))
+                  ? const Center(
+                      child: Text(
+                        'No data',
+                        style: TextStyle(color: AppColors.textSecondary),
+                      ),
+                    )
                   : BarChart(
                       BarChartData(
                         barGroups: List.generate(values.length, (i) {
-                          return BarChartGroupData(x: i, barRods: [
-                            BarChartRodData(
-                              toY: values[i],
-                              color: barColor,
-                              width: 16,
-                              borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
-                            ),
-                          ]);
+                          return BarChartGroupData(
+                            x: i,
+                            barRods: [
+                              BarChartRodData(
+                                toY: values[i],
+                                color: barColor,
+                                width: 16,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(4),
+                                ),
+                              ),
+                            ],
+                          );
                         }),
                         titlesData: FlTitlesData(
                           bottomTitles: AxisTitles(
@@ -52,8 +68,13 @@ class BarChartWidget extends StatelessWidget {
                                 if (i >= 0 && i < labels.length) {
                                   return Padding(
                                     padding: const EdgeInsets.only(top: 4),
-                                    child: Text(labels[i],
-                                        style: const TextStyle(fontSize: 9, color: AppColors.textSecondary)),
+                                    child: Text(
+                                      labels[i],
+                                      style: const TextStyle(
+                                        fontSize: 9,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
                                   );
                                 }
                                 return const SizedBox.shrink();
@@ -64,18 +85,30 @@ class BarChartWidget extends StatelessWidget {
                             sideTitles: SideTitles(
                               showTitles: true,
                               reservedSize: 36,
-                              getTitlesWidget: (val, _) => Text(val.toStringAsFixed(0),
-                                  style: const TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+                              getTitlesWidget: (val, _) => Text(
+                                val.toStringAsFixed(0),
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
                             ),
                           ),
-                          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                          topTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          rightTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
                         ),
                         borderData: FlBorderData(show: false),
                         gridData: FlGridData(
                           show: true,
                           drawVerticalLine: false,
-                          getDrawingHorizontalLine: (_) => const FlLine(color: Color(0xFF2D3F51), strokeWidth: 0.5),
+                          getDrawingHorizontalLine: (_) => const FlLine(
+                            color: Color(0xFF2D3F51),
+                            strokeWidth: 0.5,
+                          ),
                         ),
                       ),
                     ),
@@ -86,4 +119,3 @@ class BarChartWidget extends StatelessWidget {
     );
   }
 }
-

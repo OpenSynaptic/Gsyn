@@ -26,10 +26,10 @@ void main() async {
   // Restore saved tile URL so map uses it immediately on launch
   final prefs = await SharedPreferences.getInstance();
   final savedTileUrl = prefs.getString(kTileUrlPrefKey) ?? kDefaultTileUrl;
-  runApp(ProviderScope(
-    overrides: [
-      tileUrlProvider.overrideWith((ref) => savedTileUrl),
-    ],
-    child: const OsDashboardApp(),
-  ));
+  runApp(
+    ProviderScope(
+      overrides: [tileUrlProvider.overrideWith((ref) => savedTileUrl)],
+      child: const OsDashboardApp(),
+    ),
+  );
 }

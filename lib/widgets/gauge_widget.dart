@@ -30,8 +30,14 @@ class GaugeWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            Text(title, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600,
-                color: Theme.of(context).colorScheme.onSurface)),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
             Expanded(
               child: SfRadialGauge(
                 axes: <RadialAxis>[
@@ -60,9 +66,27 @@ class GaugeWidget extends StatelessWidget {
                       color: Color(0xFF1B2838),
                     ),
                     ranges: <GaugeRange>[
-                      GaugeRange(startValue: min, endValue: warningValue, color: AppColors.zoneNormal, startWidth: 8, endWidth: 8),
-                      GaugeRange(startValue: warningValue, endValue: dangerValue, color: AppColors.zoneWarning, startWidth: 8, endWidth: 8),
-                      GaugeRange(startValue: dangerValue, endValue: max, color: AppColors.zoneDanger, startWidth: 8, endWidth: 8),
+                      GaugeRange(
+                        startValue: min,
+                        endValue: warningValue,
+                        color: AppColors.zoneNormal,
+                        startWidth: 8,
+                        endWidth: 8,
+                      ),
+                      GaugeRange(
+                        startValue: warningValue,
+                        endValue: dangerValue,
+                        color: AppColors.zoneWarning,
+                        startWidth: 8,
+                        endWidth: 8,
+                      ),
+                      GaugeRange(
+                        startValue: dangerValue,
+                        endValue: max,
+                        color: AppColors.zoneDanger,
+                        startWidth: 8,
+                        endWidth: 8,
+                      ),
                     ],
                     pointers: <GaugePointer>[
                       NeedlePointer(
@@ -107,4 +131,3 @@ class GaugeWidget extends StatelessWidget {
     return AppColors.zoneNormal;
   }
 }
-

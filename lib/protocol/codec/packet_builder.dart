@@ -164,4 +164,3 @@ class PacketBuilder {
     return out;
   }
 }
-

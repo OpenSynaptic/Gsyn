@@ -127,7 +127,10 @@ class MqttTransport {
     if (!OsCmd.isDataCmd(meta.cmd)) return;
 
     final body = Uint8List.sublistView(
-        raw, meta.bodyOffset, meta.bodyOffset + meta.bodyLen);
+      raw,
+      meta.bodyOffset,
+      meta.bodyOffset + meta.bodyLen,
+    );
     final bodyText = _diffEngine.processPacket(
       cmd: meta.cmd,
       aid: meta.aid,
@@ -140,15 +143,17 @@ class MqttTransport {
     final parsed = BodyParser.parseBodyText(bodyText);
     if (parsed == null || parsed.readings.isEmpty) return;
 
-    _messageController.add(DeviceMessage(
-      meta: meta,
-      deviceAid: meta.aid,
-      nodeId: parsed.headerAid,
-      nodeState: parsed.headerState,
-      timestampSec: meta.tsSec,
-      readings: parsed.readings,
-      transportType: 'mqtt',
-    ));
+    _messageController.add(
+      DeviceMessage(
+        meta: meta,
+        deviceAid: meta.aid,
+        nodeId: parsed.headerAid,
+        nodeState: parsed.headerState,
+        timestampSec: meta.tsSec,
+        readings: parsed.readings,
+        transportType: 'mqtt',
+      ),
+    );
   }
 
   void dispose() {
@@ -157,4 +162,3 @@ class MqttTransport {
     _statusController.close();
   }
 }
-

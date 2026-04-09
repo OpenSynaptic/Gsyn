@@ -27,4 +27,3 @@ class PacketMeta {
   String toString() =>
       'PacketMeta(cmd=$cmd, aid=$aid, tid=$tid, ts=$tsSec, body=$bodyLen, crc8=$crc8Ok, crc16=$crc16Ok)';
 }
-

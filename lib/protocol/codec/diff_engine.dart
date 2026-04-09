@@ -155,7 +155,10 @@ class DiffEngine {
 
     // Replace \x01 placeholders with values
     for (final val in valsBin) {
-      result = result.replaceFirst('\x01', utf8.decode(val, allowMalformed: true));
+      result = result.replaceFirst(
+        '\x01',
+        utf8.decode(val, allowMalformed: true),
+      );
     }
 
     return result;
@@ -180,4 +183,3 @@ class _DecompResult {
 
   const _DecompResult({required this.signature, required this.valsBin});
 }
-

@@ -45,4 +45,3 @@ class Thresholds {
   static const double onlineRateWarning = 0.9;
   static const double onlineRateDanger = 0.7;
 }
-

@@ -38,4 +38,3 @@ class OsCrc {
     return crc;
   }
 }
-

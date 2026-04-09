@@ -27,7 +27,10 @@ class _RulesConfigPageState extends ConsumerState<RulesConfigPage>
   }
 
   @override
-  void dispose() { _tab.dispose(); super.dispose(); }
+  void dispose() {
+    _tab.dispose();
+    super.dispose();
+  }
 
   Future<void> _loadRules() async {
     final r = await ref.read(ruleRepositoryProvider).getAllRules();
@@ -45,26 +48,44 @@ class _RulesConfigPageState extends ConsumerState<RulesConfigPage>
       context: context,
       builder: (_) => AlertDialog(
         title: Text(l.deleteRuleTitle),
-        content: Text(l.deleteRuleMsg(r.name.isNotEmpty ? r.name : 'Rule ${r.id}')),
+        content: Text(
+          l.deleteRuleMsg(r.name.isNotEmpty ? r.name : 'Rule ${r.id}'),
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.cancel)),
-          FilledButton(onPressed: () => Navigator.pop(context, true),  child: Text(l.delete)),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(l.delete),
+          ),
         ],
       ),
     );
     if (ok == true) {
       await ref.read(ruleRepositoryProvider).delete(r.id!);
-      await ref.read(operationLogRepositoryProvider)
+      await ref
+          .read(operationLogRepositoryProvider)
           .log('DELETE_RULE', details: 'id=${r.id} name=${r.name}');
-      _loadRules(); _loadLogs();
+      _loadRules();
+      _loadLogs();
     }
   }
 
   void _openEdit(Rule? r) async {
-    await Navigator.push(context,
-        MaterialPageRoute(builder: (_) => RuleEditPage(existing: r, onSaved: () {
-          _loadRules(); _loadLogs();
-        })));
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => RuleEditPage(
+          existing: r,
+          onSaved: () {
+            _loadRules();
+            _loadLogs();
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -82,15 +103,20 @@ class _RulesConfigPageState extends ConsumerState<RulesConfigPage>
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => _openEdit(null),
-          child: const Icon(Icons.add)),
+        onPressed: () => _openEdit(null),
+        child: const Icon(Icons.add),
+      ),
       body: TabBarView(
         controller: _tab,
         children: [
           // ── Rules list ────────────────────────────────────────────────────
           _rules.isEmpty
-              ? Center(child: Text(l.noRules,
-                  style: const TextStyle(color: AppColors.textSecondary)))
+              ? Center(
+                  child: Text(
+                    l.noRules,
+                    style: const TextStyle(color: AppColors.textSecondary),
+                  ),
+                )
               : RefreshIndicator(
                   onRefresh: _loadRules,
                   child: ListView.builder(
@@ -98,21 +124,30 @@ class _RulesConfigPageState extends ConsumerState<RulesConfigPage>
                     itemBuilder: (ctx, i) {
                       final r = _rules[i];
                       return Card(
-                        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 4,
+                        ),
                         child: ListTile(
-                          title: Text(r.name.isNotEmpty ? r.name : 'Rule ${r.id}'),
+                          title: Text(
+                            r.name.isNotEmpty ? r.name : 'Rule ${r.id}',
+                          ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 '${r.sensorIdFilter ?? '*'} ${r.operator} ${r.threshold}'
                                 '  →  ${r.actionType}',
-                                style: const TextStyle(fontSize: 12)),
+                                style: const TextStyle(fontSize: 12),
+                              ),
                               Text(
                                 '${r.deviceAidFilter != null ? 'AID:${r.deviceAidFilter}  ' : ''}'
                                 '${l.cooldownDisplay(r.cooldownMs ~/ 1000)}',
-                                style: const TextStyle(fontSize: 11,
-                                    color: AppColors.textSecondary)),
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
                             ],
                           ),
                           isThreeLine: true,
@@ -122,7 +157,8 @@ class _RulesConfigPageState extends ConsumerState<RulesConfigPage>
                               Switch(
                                 value: r.enabled,
                                 onChanged: (v) async {
-                                  await ref.read(ruleRepositoryProvider)
+                                  await ref
+                                      .read(ruleRepositoryProvider)
                                       .toggleEnabled(r.id!, v);
                                   _loadRules();
                                 },
@@ -132,8 +168,11 @@ class _RulesConfigPageState extends ConsumerState<RulesConfigPage>
                                 onPressed: () => _openEdit(r),
                               ),
                               IconButton(
-                                icon: const Icon(Icons.delete_outline,
-                                    size: 18, color: AppColors.danger),
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  size: 18,
+                                  color: AppColors.danger,
+                                ),
                                 onPressed: () => _delete(r),
                               ),
                             ],
@@ -148,28 +187,49 @@ class _RulesConfigPageState extends ConsumerState<RulesConfigPage>
           RefreshIndicator(
             onRefresh: _loadLogs,
             child: _logs.isEmpty
-                ? ListView(children: [
-                    const SizedBox(height: 120),
-                    Center(child: Text(l.noOpLogs,
-                        style: const TextStyle(color: AppColors.textSecondary))),
-                  ])
+                ? ListView(
+                    children: [
+                      const SizedBox(height: 120),
+                      Center(
+                        child: Text(
+                          l.noOpLogs,
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 : ListView.builder(
                     itemCount: _logs.length,
                     itemBuilder: (ctx, i) {
                       final log = _logs[i];
                       return ListTile(
                         dense: true,
-                        leading: const Icon(Icons.circle, size: 8, color: AppColors.info),
-                        title: Text(log.action,
-                            style: const TextStyle(fontSize: 13)),
-                        subtitle: Text(log.details,
-                            style: const TextStyle(fontSize: 11),
-                            maxLines: 2, overflow: TextOverflow.ellipsis),
+                        leading: const Icon(
+                          Icons.circle,
+                          size: 8,
+                          color: AppColors.info,
+                        ),
+                        title: Text(
+                          log.action,
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        subtitle: Text(
+                          log.details,
+                          style: const TextStyle(fontSize: 11),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         trailing: Text(
-                            DateTime.fromMillisecondsSinceEpoch(log.timestampMs)
-                                .toString().substring(0, 19),
-                            style: const TextStyle(fontSize: 10,
-                                color: AppColors.textSecondary)),
+                          DateTime.fromMillisecondsSinceEpoch(
+                            log.timestampMs,
+                          ).toString().substring(0, 19),
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
                       );
                     },
                   ),
@@ -199,36 +259,48 @@ class _RuleEditPageState extends ConsumerState<RuleEditPage> {
   late String _actionType;
 
   // ── send_command structured fields ─────────────────────────────────────────
-  String _cmdType    = 'PING';
+  String _cmdType = 'PING';
   late TextEditingController _cmdTargetAidCtrl;
   late TextEditingController _cmdCustomCtrl;
 
-  static const _kSendCmds = ['PING', 'PONG', 'ID_REQUEST', 'TIME_REQUEST',
-      'HANDSHAKE_ACK', 'HANDSHAKE_NACK', 'RESET', 'CUSTOM'];
+  static const _kSendCmds = [
+    'PING',
+    'PONG',
+    'ID_REQUEST',
+    'TIME_REQUEST',
+    'HANDSHAKE_ACK',
+    'HANDSHAKE_NACK',
+    'RESET',
+    'CUSTOM',
+  ];
 
   @override
   void initState() {
     super.initState();
     final r = widget.existing;
-    _nameCtrl      = TextEditingController(text: r?.name ?? '');
-    _sensorCtrl    = TextEditingController(text: r?.sensorIdFilter ?? '');
-    _thresholdCtrl = TextEditingController(text: r?.threshold.toString() ?? '50');
+    _nameCtrl = TextEditingController(text: r?.name ?? '');
+    _sensorCtrl = TextEditingController(text: r?.sensorIdFilter ?? '');
+    _thresholdCtrl = TextEditingController(
+      text: r?.threshold.toString() ?? '50',
+    );
     _deviceAidCtrl = TextEditingController(
-        text: r?.deviceAidFilter?.toString() ?? '');
-    _cooldownCtrl  = TextEditingController(
-        text: ((r?.cooldownMs ?? 60000) ~/ 1000).toString());
-    _operator      = r?.operator ?? '>';
-    _actionType    = r?.actionType ?? 'create_alert';
+      text: r?.deviceAidFilter?.toString() ?? '',
+    );
+    _cooldownCtrl = TextEditingController(
+      text: ((r?.cooldownMs ?? 60000) ~/ 1000).toString(),
+    );
+    _operator = r?.operator ?? '>';
+    _actionType = r?.actionType ?? 'create_alert';
 
     // Parse existing send_command payload
     _cmdTargetAidCtrl = TextEditingController();
-    _cmdCustomCtrl    = TextEditingController();
+    _cmdCustomCtrl = TextEditingController();
     if (r?.actionPayload != null && r!.actionPayload != '{}') {
       try {
         final m = jsonDecode(r.actionPayload) as Map<String, dynamic>;
         _cmdType = (m['cmd'] as String?) ?? 'PING';
         _cmdTargetAidCtrl.text = (m['target_aid'] ?? '').toString();
-        _cmdCustomCtrl.text    = (m['custom'] as String?) ?? '';
+        _cmdCustomCtrl.text = (m['custom'] as String?) ?? '';
         if (!_kSendCmds.contains(_cmdType)) _cmdType = 'CUSTOM';
       } catch (_) {}
     }
@@ -236,9 +308,13 @@ class _RuleEditPageState extends ConsumerState<RuleEditPage> {
 
   @override
   void dispose() {
-    _nameCtrl.dispose(); _sensorCtrl.dispose(); _thresholdCtrl.dispose();
-    _deviceAidCtrl.dispose(); _cooldownCtrl.dispose();
-    _cmdTargetAidCtrl.dispose(); _cmdCustomCtrl.dispose();
+    _nameCtrl.dispose();
+    _sensorCtrl.dispose();
+    _thresholdCtrl.dispose();
+    _deviceAidCtrl.dispose();
+    _cooldownCtrl.dispose();
+    _cmdTargetAidCtrl.dispose();
+    _cmdCustomCtrl.dispose();
     super.dispose();
   }
 
@@ -246,7 +322,8 @@ class _RuleEditPageState extends ConsumerState<RuleEditPage> {
     if (_actionType != 'send_command') return '{}';
     final m = <String, dynamic>{'cmd': _cmdType};
     if (_cmdTargetAidCtrl.text.isNotEmpty) {
-      m['target_aid'] = int.tryParse(_cmdTargetAidCtrl.text) ?? _cmdTargetAidCtrl.text;
+      m['target_aid'] =
+          int.tryParse(_cmdTargetAidCtrl.text) ?? _cmdTargetAidCtrl.text;
     }
     if (_cmdType == 'CUSTOM' && _cmdCustomCtrl.text.isNotEmpty) {
       m['custom'] = _cmdCustomCtrl.text;
@@ -256,27 +333,29 @@ class _RuleEditPageState extends ConsumerState<RuleEditPage> {
 
   Future<void> _save() async {
     final rule = Rule(
-      id:              widget.existing?.id,
-      name:            _nameCtrl.text,
-      sensorIdFilter:  _sensorCtrl.text.isEmpty ? null : _sensorCtrl.text,
+      id: widget.existing?.id,
+      name: _nameCtrl.text,
+      sensorIdFilter: _sensorCtrl.text.isEmpty ? null : _sensorCtrl.text,
       deviceAidFilter: _deviceAidCtrl.text.isEmpty
           ? null
           : int.tryParse(_deviceAidCtrl.text),
-      operator:        _operator,
-      threshold:       double.tryParse(_thresholdCtrl.text) ?? 0,
-      actionType:      _actionType,
-      actionPayload:   _buildPayload(),
-      cooldownMs:      (int.tryParse(_cooldownCtrl.text) ?? 60) * 1000,
-      enabled:         widget.existing?.enabled ?? true,
+      operator: _operator,
+      threshold: double.tryParse(_thresholdCtrl.text) ?? 0,
+      actionType: _actionType,
+      actionPayload: _buildPayload(),
+      cooldownMs: (int.tryParse(_cooldownCtrl.text) ?? 60) * 1000,
+      enabled: widget.existing?.enabled ?? true,
     );
 
     if (rule.id == null) {
       await ref.read(ruleRepositoryProvider).insert(rule);
-      await ref.read(operationLogRepositoryProvider)
+      await ref
+          .read(operationLogRepositoryProvider)
           .log('CREATE_RULE', details: 'name=${rule.name}');
     } else {
       await ref.read(ruleRepositoryProvider).update(rule);
-      await ref.read(operationLogRepositoryProvider)
+      await ref
+          .read(operationLogRepositoryProvider)
           .log('UPDATE_RULE', details: 'id=${rule.id} name=${rule.name}');
     }
     widget.onSaved?.call();
@@ -295,99 +374,155 @@ class _RuleEditPageState extends ConsumerState<RuleEditPage> {
           const SizedBox(width: 8),
         ],
       ),
-      body: ListView(padding: const EdgeInsets.all(16), children: [
-        TextField(controller: _nameCtrl,
-            decoration: InputDecoration(labelText: l.ruleName)),
-        const SizedBox(height: 12),
-
-        Row(children: [
-          Expanded(child: TextField(controller: _sensorCtrl,
-              decoration: InputDecoration(
-                  labelText: l.sensorIdFilter, hintText: l.emptyForAll))),
-          const SizedBox(width: 12),
-          Expanded(child: TextField(controller: _deviceAidCtrl,
-              decoration: InputDecoration(
-                  labelText: l.deviceAidFilter, hintText: l.emptyForAll),
-              keyboardType: TextInputType.number)),
-        ]),
-        const SizedBox(height: 12),
-
-        Row(children: [
-          Expanded(child: DropdownButtonFormField<String>(
-            initialValue: _operator,
-            decoration: InputDecoration(labelText: l.operator_),
-            items: ['>', '<', '>=', '<=', '==', '!='].map((o) =>
-                DropdownMenuItem(value: o, child: Text(o))).toList(),
-            onChanged: (v) => setState(() => _operator = v!),
-          )),
-          const SizedBox(width: 12),
-          Expanded(child: TextField(controller: _thresholdCtrl,
-              decoration: InputDecoration(labelText: l.threshold),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true))),
-        ]),
-        const SizedBox(height: 12),
-
-        DropdownButtonFormField<String>(
-          initialValue: _actionType,
-          decoration: InputDecoration(labelText: l.triggerAction),
-          items: [
-            DropdownMenuItem(value: 'create_alert', child: Text(l.actionCreateAlert)),
-            DropdownMenuItem(value: 'send_command', child: Text(l.actionSendCommand)),
-            DropdownMenuItem(value: 'log_only',     child: Text(l.actionLogOnly)),
-          ],
-          onChanged: (v) => setState(() => _actionType = v!),
-        ),
-        const SizedBox(height: 12),
-
-        if (_actionType == 'send_command') ...[
-          DropdownButtonFormField<String>(
-            initialValue: _cmdType,
-            decoration: const InputDecoration(
-                labelText: 'OpenSynaptic CMD',
-                prefixIcon: Icon(Icons.settings_remote, size: 18)),
-            items: _kSendCmds.map((c) =>
-                DropdownMenuItem(value: c, child: Text(c))).toList(),
-            onChanged: (v) => setState(() => _cmdType = v!),
-          ),
-          const SizedBox(height: 8),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
           TextField(
-            controller: _cmdTargetAidCtrl,
-            decoration: InputDecoration(
-                labelText: l.targetAidLabel,
-                prefixIcon: const Icon(Icons.memory, size: 18)),
-            keyboardType: TextInputType.number,
+            controller: _nameCtrl,
+            decoration: InputDecoration(labelText: l.ruleName),
           ),
-          if (_cmdType == 'CUSTOM') ...[
+          const SizedBox(height: 12),
+
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _sensorCtrl,
+                  decoration: InputDecoration(
+                    labelText: l.sensorIdFilter,
+                    hintText: l.emptyForAll,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: TextField(
+                  controller: _deviceAidCtrl,
+                  decoration: InputDecoration(
+                    labelText: l.deviceAidFilter,
+                    hintText: l.emptyForAll,
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          Row(
+            children: [
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  initialValue: _operator,
+                  decoration: InputDecoration(labelText: l.operator_),
+                  items: ['>', '<', '>=', '<=', '==', '!=']
+                      .map((o) => DropdownMenuItem(value: o, child: Text(o)))
+                      .toList(),
+                  onChanged: (v) => setState(() => _operator = v!),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: TextField(
+                  controller: _thresholdCtrl,
+                  decoration: InputDecoration(labelText: l.threshold),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          DropdownButtonFormField<String>(
+            initialValue: _actionType,
+            decoration: InputDecoration(labelText: l.triggerAction),
+            items: [
+              DropdownMenuItem(
+                value: 'create_alert',
+                child: Text(l.actionCreateAlert),
+              ),
+              DropdownMenuItem(
+                value: 'send_command',
+                child: Text(l.actionSendCommand),
+              ),
+              DropdownMenuItem(value: 'log_only', child: Text(l.actionLogOnly)),
+            ],
+            onChanged: (v) => setState(() => _actionType = v!),
+          ),
+          const SizedBox(height: 12),
+
+          if (_actionType == 'send_command') ...[
+            DropdownButtonFormField<String>(
+              initialValue: _cmdType,
+              decoration: const InputDecoration(
+                labelText: 'OpenSynaptic CMD',
+                prefixIcon: Icon(Icons.settings_remote, size: 18),
+              ),
+              items: _kSendCmds
+                  .map((c) => DropdownMenuItem(value: c, child: Text(c)))
+                  .toList(),
+              onChanged: (v) => setState(() => _cmdType = v!),
+            ),
             const SizedBox(height: 8),
             TextField(
-              controller: _cmdCustomCtrl,
+              controller: _cmdTargetAidCtrl,
               decoration: InputDecoration(
-                  labelText: l.customCmdLabel,
-                  hintText: 'hex: 09 00 01'),
+                labelText: l.targetAidLabel,
+                prefixIcon: const Icon(Icons.memory, size: 18),
+              ),
+              keyboardType: TextInputType.number,
             ),
+            if (_cmdType == 'CUSTOM') ...[
+              const SizedBox(height: 8),
+              TextField(
+                controller: _cmdCustomCtrl,
+                decoration: InputDecoration(
+                  labelText: l.customCmdLabel,
+                  hintText: 'hex: 09 00 01',
+                ),
+              ),
+            ],
+            const SizedBox(height: 4),
+            Text(
+              l.generatedPayload(_buildPayload()),
+              style: const TextStyle(
+                fontSize: 10,
+                color: AppColors.textSecondary,
+                fontFamily: 'monospace',
+              ),
+            ),
+            const SizedBox(height: 8),
           ],
-          const SizedBox(height: 4),
-          Text(
-            l.generatedPayload(_buildPayload()),
-            style: const TextStyle(fontSize: 10,
-                color: AppColors.textSecondary, fontFamily: 'monospace'),
+
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _cooldownCtrl,
+                  decoration: InputDecoration(
+                    labelText: l.cooldownLabel,
+                    hintText: '60',
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(child: SizedBox.shrink()),
+            ],
           ),
+
           const SizedBox(height: 8),
+          Text(
+            l.rulesHelpText,
+            style: const TextStyle(
+              fontSize: 11,
+              color: AppColors.textSecondary,
+            ),
+          ),
         ],
-
-        Row(children: [
-          Expanded(child: TextField(controller: _cooldownCtrl,
-              decoration: InputDecoration(
-                  labelText: l.cooldownLabel, hintText: '60'),
-              keyboardType: TextInputType.number)),
-          const SizedBox(width: 12),
-          const Expanded(child: SizedBox.shrink()),
-        ]),
-
-        const SizedBox(height: 8),
-        Text(l.rulesHelpText,
-            style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
-      ]),
+      ),
     );
   }
 }

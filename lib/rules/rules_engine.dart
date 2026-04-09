@@ -21,10 +21,10 @@ class RulesEngine {
     required AlertRepository alertRepo,
     required OperationLogRepository logRepo,
     required TransportManager transport,
-  })  : _ruleRepo = ruleRepo,
-        _alertRepo = alertRepo,
-        _logRepo = logRepo,
-        _transport = transport;
+  }) : _ruleRepo = ruleRepo,
+       _alertRepo = alertRepo,
+       _logRepo = logRepo,
+       _transport = transport;
 
   /// Start listening to the message stream.
   void start() {
@@ -44,7 +44,8 @@ class RulesEngine {
     for (final reading in msg.readings) {
       for (final rule in rules) {
         // Check device filter
-        if (rule.deviceAidFilter != null && rule.deviceAidFilter != msg.deviceAid) {
+        if (rule.deviceAidFilter != null &&
+            rule.deviceAidFilter != msg.deviceAid) {
           continue;
         }
         // Check sensor filter
@@ -84,20 +85,24 @@ class RulesEngine {
     switch (rule.actionType) {
       case 'create_alert':
         final alertLevel = sensorValue > rule.threshold * 1.5 ? 2 : 1;
-        await _alertRepo.insert(Alert(
-          deviceAid: msg.deviceAid,
-          sensorId: sensorId,
-          level: alertLevel,
-          message:
-              'Rule "${rule.name}": $sensorId=$sensorValue $unit ${rule.operator} ${rule.threshold}',
-          createdMs: DateTime.now().millisecondsSinceEpoch,
-        ));
+        await _alertRepo.insert(
+          Alert(
+            deviceAid: msg.deviceAid,
+            sensorId: sensorId,
+            level: alertLevel,
+            message:
+                'Rule "${rule.name}": $sensorId=$sensorValue $unit ${rule.operator} ${rule.threshold}',
+            createdMs: DateTime.now().millisecondsSinceEpoch,
+          ),
+        );
         break;
 
       case 'send_command':
         try {
-          final payload = jsonDecode(rule.actionPayload) as Map<String, dynamic>;
-          final targetAid = (payload['target_aid'] as num?)?.toInt() ?? msg.deviceAid;
+          final payload =
+              jsonDecode(rule.actionPayload) as Map<String, dynamic>;
+          final targetAid =
+              (payload['target_aid'] as num?)?.toInt() ?? msg.deviceAid;
           final cmdSensorId = (payload['sensor_id'] as String?) ?? 'CMD';
           final cmdValue = (payload['value'] as num?)?.toDouble() ?? 0.0;
           final cmdUnit = (payload['unit'] as String?) ?? '';
@@ -135,4 +140,3 @@ class RulesEngine {
     stop();
   }
 }
-

@@ -78,8 +78,12 @@ class Base62 {
 
     // Group 2: b3, b4, b5
     out[4] = _b64urlAlphabet.codeUnitAt((b3 >> 2) & 0x3F);
-    out[5] = _b64urlAlphabet.codeUnitAt(((b3 & 0x03) << 4) | ((b4 >> 4) & 0x0F));
-    out[6] = _b64urlAlphabet.codeUnitAt(((b4 & 0x0F) << 2) | ((b5 >> 6) & 0x03));
+    out[5] = _b64urlAlphabet.codeUnitAt(
+      ((b3 & 0x03) << 4) | ((b4 >> 4) & 0x0F),
+    );
+    out[6] = _b64urlAlphabet.codeUnitAt(
+      ((b4 & 0x0F) << 2) | ((b5 >> 6) & 0x03),
+    );
     out[7] = _b64urlAlphabet.codeUnitAt(b5 & 0x3F);
 
     return String.fromCharCodes(out);
@@ -115,4 +119,3 @@ class Base62 {
     return decode(b62) / valueScale;
   }
 }
-

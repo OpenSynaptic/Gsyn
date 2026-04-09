@@ -10,11 +10,20 @@ class DeviceRepository {
 
   Future<void> upsertDevice(Device device) async {
     final db = await _db.database;
-    final existing = await db.query('devices', where: 'aid = ?', whereArgs: [device.aid]);
+    final existing = await db.query(
+      'devices',
+      where: 'aid = ?',
+      whereArgs: [device.aid],
+    );
     if (existing.isEmpty) {
       await db.insert('devices', device.toMap());
     } else {
-      await db.update('devices', device.toMap(), where: 'aid = ?', whereArgs: [device.aid]);
+      await db.update(
+        'devices',
+        device.toMap(),
+        where: 'aid = ?',
+        whereArgs: [device.aid],
+      );
     }
   }
 
@@ -32,9 +41,13 @@ class DeviceRepository {
 
   Future<int> getOnlineCount() async {
     final db = await _db.database;
-    final cutoff = DateTime.now().subtract(const Duration(minutes: 5)).millisecondsSinceEpoch;
+    final cutoff = DateTime.now()
+        .subtract(const Duration(minutes: 5))
+        .millisecondsSinceEpoch;
     final result = await db.rawQuery(
-        'SELECT COUNT(*) as c FROM devices WHERE last_seen_ms > ?', [cutoff]);
+      'SELECT COUNT(*) as c FROM devices WHERE last_seen_ms > ?',
+      [cutoff],
+    );
     return (result.first['c'] as int?) ?? 0;
   }
 
@@ -105,11 +118,14 @@ class SensorDataRepository {
   /// Get the latest reading per sensor for a device.
   Future<List<SensorData>> getLatestByDevice(int deviceAid) async {
     final db = await _db.database;
-    final rows = await db.rawQuery('''
+    final rows = await db.rawQuery(
+      '''
       SELECT * FROM sensor_data WHERE id IN (
         SELECT MAX(id) FROM sensor_data WHERE device_aid = ? GROUP BY sensor_id
       )
-    ''', [deviceAid]);
+    ''',
+      [deviceAid],
+    );
     return rows.map((r) => SensorData.fromMap(r)).toList();
   }
 }
@@ -124,7 +140,11 @@ class AlertRepository {
     return db.insert('alerts', alert.toMap());
   }
 
-  Future<List<Alert>> getAlerts({int? level, bool? acknowledged, int limit = 100}) async {
+  Future<List<Alert>> getAlerts({
+    int? level,
+    bool? acknowledged,
+    int limit = 100,
+  }) async {
     final db = await _db.database;
     final where = <String>[];
     final args = <dynamic>[];
@@ -150,13 +170,19 @@ class AlertRepository {
 
   Future<void> acknowledge(int id) async {
     final db = await _db.database;
-    await db.update('alerts', {'acknowledged': 1}, where: 'id = ?', whereArgs: [id]);
+    await db.update(
+      'alerts',
+      {'acknowledged': 1},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 
   Future<int> getUnacknowledgedCount() async {
     final db = await _db.database;
     final result = await db.rawQuery(
-        'SELECT COUNT(*) as c FROM alerts WHERE acknowledged = 0');
+      'SELECT COUNT(*) as c FROM alerts WHERE acknowledged = 0',
+    );
     return (result.first['c'] as int?) ?? 0;
   }
 }
@@ -173,7 +199,12 @@ class RuleRepository {
 
   Future<void> update(Rule rule) async {
     final db = await _db.database;
-    await db.update('rules', rule.toMap(), where: 'id = ?', whereArgs: [rule.id]);
+    await db.update(
+      'rules',
+      rule.toMap(),
+      where: 'id = ?',
+      whereArgs: [rule.id],
+    );
   }
 
   Future<void> delete(int id) async {
@@ -195,7 +226,12 @@ class RuleRepository {
 
   Future<void> toggleEnabled(int id, bool enabled) async {
     final db = await _db.database;
-    await db.update('rules', {'enabled': enabled ? 1 : 0}, where: 'id = ?', whereArgs: [id]);
+    await db.update(
+      'rules',
+      {'enabled': enabled ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
 
@@ -204,7 +240,11 @@ class RuleRepository {
 class OperationLogRepository {
   final _db = DatabaseHelper.instance;
 
-  Future<void> log(String action, {String user = 'system', String details = ''}) async {
+  Future<void> log(
+    String action, {
+    String user = 'system',
+    String details = '',
+  }) async {
     final db = await _db.database;
     await db.insert('operation_logs', {
       'user': user,
@@ -216,7 +256,11 @@ class OperationLogRepository {
 
   Future<List<OperationLog>> query({int limit = 200}) async {
     final db = await _db.database;
-    final rows = await db.query('operation_logs', orderBy: 'timestamp_ms DESC', limit: limit);
+    final rows = await db.query(
+      'operation_logs',
+      orderBy: 'timestamp_ms DESC',
+      limit: limit,
+    );
     return rows.map((r) => OperationLog.fromMap(r)).toList();
   }
 }
@@ -227,5 +271,6 @@ final deviceRepositoryProvider = Provider((_) => DeviceRepository());
 final sensorDataRepositoryProvider = Provider((_) => SensorDataRepository());
 final alertRepositoryProvider = Provider((_) => AlertRepository());
 final ruleRepositoryProvider = Provider((_) => RuleRepository());
-final operationLogRepositoryProvider = Provider((_) => OperationLogRepository());
-
+final operationLogRepositoryProvider = Provider(
+  (_) => OperationLogRepository(),
+);

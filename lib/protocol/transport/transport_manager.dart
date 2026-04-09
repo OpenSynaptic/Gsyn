@@ -29,12 +29,14 @@ class TransportManager {
 
     // Periodic stats update
     Timer.periodic(const Duration(seconds: 1), (_) {
-      _statsController.add(TransportStats(
-        udpConnected: udp.isRunning,
-        mqttConnected: mqtt.isConnected,
-        messagesPerSecond: _messagesThisSecond,
-        totalMessages: _totalMessages,
-      ));
+      _statsController.add(
+        TransportStats(
+          udpConnected: udp.isRunning,
+          mqttConnected: mqtt.isConnected,
+          messagesPerSecond: _messagesThisSecond,
+          totalMessages: _totalMessages,
+        ),
+      );
       _messagesThisSecond = 0;
     });
   }
@@ -100,4 +102,3 @@ final messageStreamProvider = StreamProvider<DeviceMessage>((ref) {
 final transportStatsProvider = StreamProvider<TransportStats>((ref) {
   return ref.watch(transportManagerProvider).statsStream;
 });
-

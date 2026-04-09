@@ -8,7 +8,7 @@ import 'app_strings.dart';
 export 'app_strings.dart';
 
 const _kLocalePrefKey = 'app_locale';
-const _kLocaleSystem  = 'system';
+const _kLocaleSystem = 'system';
 
 // ── Notifier ──────────────────────────────────────────────────────────────────
 // null  = follow system locale
@@ -17,7 +17,7 @@ class LocaleNotifier extends StateNotifier<Locale?> {
   LocaleNotifier() : super(null); // default: follow system
 
   Future<void> load() async {
-    final p    = await SharedPreferences.getInstance();
+    final p = await SharedPreferences.getInstance();
     final code = p.getString(_kLocalePrefKey);
     if (code == null || code == _kLocaleSystem) {
       state = null;
@@ -29,12 +29,18 @@ class LocaleNotifier extends StateNotifier<Locale?> {
   /// Reset to system locale.
   Future<void> setSystem() async {
     state = null;
-    (await SharedPreferences.getInstance()).setString(_kLocalePrefKey, _kLocaleSystem);
+    (await SharedPreferences.getInstance()).setString(
+      _kLocalePrefKey,
+      _kLocaleSystem,
+    );
   }
 
   Future<void> setLocale(Locale locale) async {
     state = locale;
-    (await SharedPreferences.getInstance()).setString(_kLocalePrefKey, locale.languageCode);
+    (await SharedPreferences.getInstance()).setString(
+      _kLocalePrefKey,
+      locale.languageCode,
+    );
   }
 }
 
@@ -44,7 +50,9 @@ class LocaleNotifier extends StateNotifier<Locale?> {
 Locale resolveLocale(Locale? chosen) {
   if (chosen != null) return chosen;
   final sys = PlatformDispatcher.instance.locale;
-  return sys.languageCode.startsWith('zh') ? const Locale('zh') : const Locale('en');
+  return sys.languageCode.startsWith('zh')
+      ? const Locale('zh')
+      : const Locale('en');
 }
 
 // ── Providers ─────────────────────────────────────────────────────────────────
@@ -56,8 +64,7 @@ final localeProvider = StateNotifierProvider<LocaleNotifier, Locale?>((ref) {
 
 /// Reactive [AppStrings] — rebuilds any watching widget when locale changes.
 final appStringsProvider = Provider<AppStrings>((ref) {
-  final chosen    = ref.watch(localeProvider);
+  final chosen = ref.watch(localeProvider);
   final effective = resolveLocale(chosen);
   return AppStrings(effective.languageCode == 'zh');
 });
-

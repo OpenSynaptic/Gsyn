@@ -18,13 +18,13 @@ class PacketDecoder {
     // Parse header
     final cmd = packet[0];
     final routeCount = packet[1];
-    final aid = (packet[2] << 24) | (packet[3] << 16) |
-        (packet[4] << 8) | packet[5];
+    final aid =
+        (packet[2] << 24) | (packet[3] << 16) | (packet[4] << 8) | packet[5];
     final tid = packet[6];
 
     // Timestamp: 6 bytes big-endian; we keep lower 32 bits (bytes 9-12)
-    final tsSec = (packet[9] << 24) | (packet[10] << 16) |
-        (packet[11] << 8) | packet[12];
+    final tsSec =
+        (packet[9] << 24) | (packet[10] << 16) | (packet[11] << 8) | packet[12];
 
     // CRC-8: over body only
     final gotCrc8 = packet[packet.length - 3];
@@ -37,8 +37,11 @@ class PacketDecoder {
     final crc8Ok = expCrc8 == gotCrc8;
 
     // CRC-16: over all bytes except the last 2
-    final gotCrc16 = (packet[packet.length - 2] << 8) | packet[packet.length - 1];
-    final expCrc16 = OsCrc.crc16(Uint8List.sublistView(packet, 0, packet.length - 2));
+    final gotCrc16 =
+        (packet[packet.length - 2] << 8) | packet[packet.length - 1];
+    final expCrc16 = OsCrc.crc16(
+      Uint8List.sublistView(packet, 0, packet.length - 2),
+    );
     final crc16Ok = expCrc16 == gotCrc16;
 
     return PacketMeta(
@@ -54,4 +57,3 @@ class PacketDecoder {
     );
   }
 }
-
