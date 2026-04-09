@@ -110,12 +110,38 @@ class _AppShellState extends State<AppShell> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
+                    padding: const EdgeInsets.only(bottom: 16, left: 4, right: 4),
                     child: Column(mainAxisSize: MainAxisSize.min, children: [
-                      _RailExtra(icon: Icons.map,             label: l.drawerMap,     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DeviceMapPage()))),
-                      _RailExtra(icon: Icons.history,         label: l.drawerHistory, onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryPage()))),
-                      _RailExtra(icon: Icons.rule,            label: l.drawerRules,   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RulesConfigPage()))),
-                      _RailExtra(icon: Icons.health_and_safety, label: l.drawerHealth, onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SystemHealthPage()))),
+                      Divider(height: 12,
+                          color: Theme.of(context).dividerColor.withValues(alpha: 0.5)),
+                      const SizedBox(height: 4),
+                      // Row 1: Map  History
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                        _RailExtra(
+                          icon: Icons.map, label: l.drawerMap,
+                          showLabel: MediaQuery.of(context).size.width >= 1200,
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DeviceMapPage())),
+                        ),
+                        _RailExtra(
+                          icon: Icons.history, label: l.drawerHistory,
+                          showLabel: MediaQuery.of(context).size.width >= 1200,
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryPage())),
+                        ),
+                      ]),
+                      const SizedBox(height: 4),
+                      // Row 2: Rules  Health
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                        _RailExtra(
+                          icon: Icons.rule, label: l.drawerRules,
+                          showLabel: MediaQuery.of(context).size.width >= 1200,
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RulesConfigPage())),
+                        ),
+                        _RailExtra(
+                          icon: Icons.health_and_safety, label: l.drawerHealth,
+                          showLabel: MediaQuery.of(context).size.width >= 1200,
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SystemHealthPage())),
+                        ),
+                      ]),
                     ]),
                   ),
                 ),
@@ -193,19 +219,41 @@ class _AppDrawer extends ConsumerWidget {
   }
 }
 
-// ── Rail extra button (desktop trailing) ──────────────────────────────────────
+// ── Rail extra button (desktop trailing 2×2 grid) ────────────────────────────
 class _RailExtra extends StatelessWidget {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
-  const _RailExtra({required this.icon, required this.label, required this.onTap});
+  final bool showLabel;
+  const _RailExtra({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.showLabel = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(icon, size: 20),
-      tooltip: label,
-      onPressed: onTap,
+    final color = Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.65);
+    return Tooltip(
+      message: label,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+          child: showLabel
+              ? Column(mainAxisSize: MainAxisSize.min, children: [
+                  Icon(icon, size: 18, color: color),
+                  const SizedBox(height: 2),
+                  Text(label,
+                      style: TextStyle(fontSize: 9, color: color),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1),
+                ])
+              : Icon(icon, size: 20, color: color),
+        ),
+      ),
     );
   }
 }
